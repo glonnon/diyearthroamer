@@ -31,6 +31,11 @@ sym-lib-table.bak
 /build/
 /out/
 
+# Generated master documents (regenerate with scripts/build-master-doc.py)
+/MASTER.md
+/MASTER.pdf
+/MASTER.html
+
 # Python venvs (for any helper scripts)
 .venv/
 __pycache__/
