@@ -1,11 +1,12 @@
 %% Plumbing — Drains and waste
 %% Render: mmdc -i diagrams/plumbing-drains.mmd -o diagrams/plumbing-drains.svg
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef grey fill:#e5e7eb,stroke:#374151,stroke-width:1px
-    classDef black fill:#fde2e4,stroke:#991b1b,stroke-width:1px
-    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
-    classDef vent fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
-    classDef out fill:#fef3c7,stroke:#92400e,stroke-width:2px
+    classDef grey fill:#e5e7eb,stroke:#1f2937,stroke-width:2px,color:#000
+    classDef black fill:#fecaca,stroke:#7f1d1d,stroke-width:2px,color:#000
+    classDef tank fill:#bbf7d0,stroke:#14532d,stroke-width:3px,color:#000
+    classDef vent fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
+    classDef out fill:#fde68a,stroke:#78350f,stroke-width:3px,color:#000
 
     GalleySink[Galley sink<br/>P-trap]:::grey
     BathSink[Bath sink<br/>P-trap]:::grey

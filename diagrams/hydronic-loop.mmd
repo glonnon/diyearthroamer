@@ -1,10 +1,11 @@
 %% Hydronic heating loop — Webasto Dual Top Evo 8
 %% Render: mmdc -i diagrams/hydronic-loop.mmd -o diagrams/hydronic-loop.svg
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart LR
-    classDef heat fill:#fef3c7,stroke:#92400e,stroke-width:2px
-    classDef zone fill:#fee2e2,stroke:#991b1b,stroke-width:1px
-    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:1px
-    classDef src fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
+    classDef heat fill:#fed7aa,stroke:#7c2d12,stroke-width:3px,color:#000
+    classDef zone fill:#fecaca,stroke:#991b1b,stroke-width:2px,color:#000
+    classDef tank fill:#bbf7d0,stroke:#14532d,stroke-width:2px,color:#000
+    classDef src fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
 
     Diesel[F550 main fuel tank<br/>40 gal diesel]:::src
     Burner[Webasto Dual Top Evo 8<br/>~27 kBTU/hr<br/>+ 120V AC element]:::heat

@@ -1,10 +1,11 @@
 %% KiCad hierarchical schematic structure
 %% Render: mmdc -i diagrams/schematic-hierarchy.mmd -o diagrams/schematic-hierarchy.svg
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef root fill:#fde68a,stroke:#78350f,stroke-width:2px
-    classDef power fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
-    classDef ac fill:#fce7f3,stroke:#9d174d,stroke-width:1px
-    classDef ctrl fill:#dcfce7,stroke:#166534,stroke-width:1px
+    classDef root fill:#fde68a,stroke:#78350f,stroke-width:3px,color:#000
+    classDef power fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
+    classDef ac fill:#fbcfe8,stroke:#831843,stroke-width:2px,color:#000
+    classDef ctrl fill:#bbf7d0,stroke:#14532d,stroke-width:2px,color:#000
 
     Root[Root<br/>shore, alternator, battery, bus]:::root
 

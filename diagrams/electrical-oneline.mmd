@@ -1,13 +1,14 @@
 %% Electrical one-line — DIY Earthroamer
 %% Render: mmdc -i diagrams/electrical-oneline.mmd -o diagrams/electrical-oneline.svg
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef bus fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#000
-    classDef batt fill:#dcfce7,stroke:#166534,stroke-width:1px
-    classDef inv fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
-    classDef solar fill:#fde68a,stroke:#78350f,stroke-width:1px
-    classDef ac fill:#fce7f3,stroke:#9d174d,stroke-width:1px
-    classDef load fill:#ede9fe,stroke:#5b21b6,stroke-width:1px
-    classDef proto fill:#e5e7eb,stroke:#374151,stroke-width:1px
+    classDef bus fill:#fed7aa,stroke:#7c2d12,stroke-width:3px,color:#000
+    classDef batt fill:#bbf7d0,stroke:#14532d,stroke-width:2px,color:#000
+    classDef inv fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
+    classDef solar fill:#fde68a,stroke:#78350f,stroke-width:2px,color:#000
+    classDef ac fill:#fbcfe8,stroke:#831843,stroke-width:2px,color:#000
+    classDef load fill:#ddd6fe,stroke:#4c1d95,stroke-width:2px,color:#000
+    classDef proto fill:#e5e7eb,stroke:#1f2937,stroke-width:2px,color:#000
 
     %% Solar path
     PVarr[4x 320W panels<br/>2s2p ~75 Voc / 36 Isc]:::solar

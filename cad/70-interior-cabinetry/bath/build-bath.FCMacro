@@ -1,0 +1,143 @@
+# -*- coding: utf-8 -*-
+"""
+build-bath.FCMacro — parametric aft port-side bath assembly.
+
+Generates a `bath` document with simplified solids for:
+  - Shower stall (pan + walls)
+  - Toilet enclosure
+  - Vanity cabinet w/ vessel sink
+  - Hydronic towel rack mount
+
+Origin: rear axle / ground. Bath sits aft of rear axle on port side.
+Reference: cad/70-interior-cabinetry/bath/SPECS.md
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+PARAMS = {
+    "bath_x_front": -300.0,       # rear edge of dinette area
+    "bath_x_rear": -1600.0,       # toward shell tail
+    "bath_floor_y": 1216.0,
+    "bath_z_outboard": 1117.5,    # port wall
+    "bath_depth": 1000.0,         # inboard from port wall
+    "ceiling_y": 3216.0,          # ~2000 above floor
+    "shower_w": 760.0,
+    "shower_d": 760.0,
+    "shower_h": 1830.0,
+    "vanity_w": 760.0,
+    "vanity_d": 460.0,
+    "vanity_h": 870.0,
+    "toilet_w": 460.0,
+    "toilet_d": 600.0,
+    "ply_thk": 18.0,
+}
+
+COLORS = {
+    "frp": (0.95, 0.95, 0.93),
+    "ply": (0.85, 0.78, 0.55),
+    "sink": (0.9, 0.9, 0.92),
+    "toilet": (0.95, 0.95, 0.95),
+    "rack": (0.7, 0.7, 0.75),
+}
+
+
+def add_box(doc, name, length, width, height, xyz, color=None,
+            transparency=0):
+    box = Part.makeBox(length, height, width)
+    box.translate(Vector(*xyz))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+    if transparency:
+        obj.ViewObject.Transparency = transparency
+    return obj
+
+
+def add_cylinder(doc, name, dia, length, base_xyz, axis, color=None):
+    cyl = Part.makeCylinder(dia/2.0, length, Vector(*base_xyz),
+                            Vector(*axis))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = cyl
+    if color:
+        obj.ViewObject.ShapeColor = color
+    return obj
+
+
+def build():
+    p = PARAMS
+    doc = App.newDocument("bath")
+    floor = p["bath_floor_y"]
+    z_out = p["bath_z_outboard"]
+
+    # Shower stall (rear-port corner)
+    shower_x = p["bath_x_rear"]
+    add_box(doc, "shower_pan",
+            p["shower_w"], p["shower_d"], 60.0,
+            (shower_x, floor, z_out - p["shower_d"]),
+            color=COLORS["frp"])
+    add_box(doc, "shower_wall_back",
+            p["shower_w"], 50.0, p["shower_h"],
+            (shower_x, floor, z_out - p["shower_d"]),
+            color=COLORS["frp"], transparency=20)
+    add_box(doc, "shower_wall_port",
+            50.0, p["shower_d"], p["shower_h"],
+            (shower_x, floor, z_out - p["shower_d"]),
+            color=COLORS["frp"], transparency=20)
+    add_box(doc, "shower_door",
+            p["shower_w"], 30.0, p["shower_h"],
+            (shower_x, floor, z_out - p["shower_d"] - 30),
+            color=COLORS["frp"], transparency=50)
+
+    # Toilet enclosure
+    toilet_x = shower_x + p["shower_w"] + 100.0
+    add_box(doc, "toilet_partition",
+            10.0, p["toilet_d"], p["shower_h"] - 200.0,
+            (toilet_x - 10, floor, z_out - p["toilet_d"]),
+            color=COLORS["frp"], transparency=30)
+    add_box(doc, "toilet_base",
+            380.0, 380.0, 400.0,
+            (toilet_x + 30, floor,
+             z_out - p["toilet_d"] / 2 - 190.0),
+            color=COLORS["toilet"])
+    add_cylinder(doc, "toilet_bowl", 280.0, 200.0,
+                 (toilet_x + 220, floor + 400.0,
+                  z_out - p["toilet_d"] / 2),
+                 axis=(0, 1, 0), color=COLORS["toilet"])
+
+    # Vanity cabinet
+    vanity_x = toilet_x + p["toilet_w"] + 50.0
+    add_box(doc, "vanity_cabinet",
+            p["vanity_w"], p["vanity_d"], p["vanity_h"],
+            (vanity_x, floor, z_out - p["vanity_d"]),
+            color=COLORS["ply"], transparency=20)
+    add_box(doc, "vanity_counter",
+            p["vanity_w"], p["vanity_d"], 25.0,
+            (vanity_x, floor + p["vanity_h"], z_out - p["vanity_d"]),
+            color=COLORS["frp"])
+    # Vessel sink (cylinder atop counter)
+    add_cylinder(doc, "vessel_sink", 320.0, 130.0,
+                 (vanity_x + p["vanity_w"]/2,
+                  floor + p["vanity_h"] + 25.0,
+                  z_out - p["vanity_d"]/2),
+                 axis=(0, 1, 0), color=COLORS["sink"])
+
+    # Hydronic towel rack on inboard wall (faces shower)
+    add_box(doc, "towel_rack_runtal",
+            450.0, 100.0, 760.0,
+            (shower_x + p["shower_w"]/2 - 225,
+             floor + 1000.0,
+             z_out - p["bath_depth"] + 100.0),
+            color=COLORS["rack"])
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "bath built. Save as cad/70-interior-cabinetry/bath/"
+        "bath-master.FCStd and export STEP.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

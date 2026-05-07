@@ -7,14 +7,15 @@ truth for sizing today.
 ## Mermaid view (renders inline on GitHub; SVG via `scripts/render-diagrams.sh`)
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef bus fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#000
-    classDef batt fill:#dcfce7,stroke:#166534
-    classDef inv fill:#dbeafe,stroke:#1e3a8a
-    classDef solar fill:#fde68a,stroke:#78350f
-    classDef ac fill:#fce7f3,stroke:#9d174d
-    classDef load fill:#ede9fe,stroke:#5b21b6
-    classDef proto fill:#e5e7eb,stroke:#374151
+    classDef bus fill:#fed7aa,stroke:#7c2d12,stroke-width:3px,color:#000
+    classDef batt fill:#bbf7d0,stroke:#14532d,stroke-width:2px,color:#000
+    classDef inv fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
+    classDef solar fill:#fde68a,stroke:#78350f,stroke-width:2px,color:#000
+    classDef ac fill:#fbcfe8,stroke:#831843,stroke-width:2px,color:#000
+    classDef load fill:#ddd6fe,stroke:#4c1d95,stroke-width:2px,color:#000
+    classDef proto fill:#e5e7eb,stroke:#1f2937,stroke-width:2px,color:#000
 
     PVarr[4x 320W panels<br/>2s2p ~75 Voc]:::solar
     Combiner[Combiner<br/>15A MC4 fuses]:::proto

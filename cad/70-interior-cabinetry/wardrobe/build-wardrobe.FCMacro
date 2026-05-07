@@ -1,0 +1,138 @@
+# -*- coding: utf-8 -*-
+"""
+build-wardrobe.FCMacro — parametric port-side wardrobe.
+
+Generates a `wardrobe` document with simplified solids for the
+wardrobe carcass, door, drawer stack, and hanging rod placeholders.
+
+Origin: rear axle / ground. +X forward, +Y up, +Z driver-side.
+Wardrobe is on port (+Z) wall between dinette and bath.
+
+Reference: cad/70-interior-cabinetry/wardrobe/SPECS.md
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+PARAMS = {
+    "wardrobe_x_front": 1800.0,    # forward edge (toward dinette)
+    "wardrobe_floor_y": 1216.0,
+    "wardrobe_z_outboard": 1117.5, # port wall
+    "length": 600.0,               # X dimension
+    "depth": 530.0,                # Z dimension (inboard from wall)
+    "height": 1950.0,
+    "drawer_stack_h": 600.0,
+    "ply_thk": 18.0,
+}
+
+COLORS = {
+    "ply": (0.85, 0.78, 0.55),
+    "door": (0.7, 0.6, 0.4),
+    "rod": (0.85, 0.85, 0.9),
+    "drawer": (0.8, 0.7, 0.5),
+}
+
+
+def add_box(doc, name, length, width, height, xyz, color=None,
+            transparency=0):
+    box = Part.makeBox(length, height, width)
+    box.translate(Vector(*xyz))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+    if transparency:
+        obj.ViewObject.Transparency = transparency
+    return obj
+
+
+def add_cylinder(doc, name, dia, length, base_xyz, axis, color=None):
+    cyl = Part.makeCylinder(dia/2.0, length, Vector(*base_xyz),
+                            Vector(*axis))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = cyl
+    if color:
+        obj.ViewObject.ShapeColor = color
+    return obj
+
+
+def build():
+    p = PARAMS
+    doc = App.newDocument("wardrobe")
+    floor = p["wardrobe_floor_y"]
+    z_out = p["wardrobe_z_outboard"]
+    x_front = p["wardrobe_x_front"]
+
+    # Sides + back + top + bottom (carcass)
+    # Side panel - port (against wall)
+    add_box(doc, "side_port",
+            p["ply_thk"], p["depth"], p["height"],
+            (x_front - p["ply_thk"], floor, z_out - p["depth"]),
+            color=COLORS["ply"], transparency=20)
+    # Side panel - starboard (inboard side)
+    add_box(doc, "side_starboard",
+            p["ply_thk"], p["depth"], p["height"],
+            (x_front - p["length"], floor, z_out - p["depth"]),
+            color=COLORS["ply"], transparency=20)
+    # Back panel
+    add_box(doc, "back",
+            p["length"], p["ply_thk"], p["height"],
+            (x_front - p["length"], floor, z_out - p["depth"]),
+            color=COLORS["ply"], transparency=20)
+    # Top
+    add_box(doc, "top",
+            p["length"], p["depth"], p["ply_thk"],
+            (x_front - p["length"], floor + p["height"] - p["ply_thk"],
+             z_out - p["depth"]),
+            color=COLORS["ply"], transparency=20)
+    # Bottom (above toe kick)
+    add_box(doc, "bottom",
+            p["length"], p["depth"], p["ply_thk"],
+            (x_front - p["length"], floor + 100.0,
+             z_out - p["depth"]),
+            color=COLORS["ply"], transparency=20)
+
+    # Hanging rods (two)
+    rod_y_lower = floor + 800.0
+    rod_y_upper = floor + 1500.0
+    for label, ry in (("lower", rod_y_lower), ("upper", rod_y_upper)):
+        add_cylinder(doc, f"rod_{label}",
+                     25.0, p["length"] - 100.0,
+                     (x_front - p["length"] + 50.0,
+                      ry,
+                      z_out - p["depth"]/2),
+                     axis=(-1, 0, 0),
+                     color=COLORS["rod"])
+
+    # Drawer stack at bottom (3 drawers)
+    drawer_h = p["drawer_stack_h"] / 3.0
+    for i in range(3):
+        add_box(doc, f"drawer_{i+1}_face",
+                p["length"] - 4.0,
+                p["ply_thk"],
+                drawer_h - 4.0,
+                (x_front - p["length"] + 2.0,
+                 floor + 100.0 + i * drawer_h + 2.0,
+                 z_out - p["depth"] - p["ply_thk"]),
+                color=COLORS["drawer"])
+
+    # Door (full height, hinged on starboard side)
+    add_box(doc, "door",
+            p["length"] - 20.0,
+            p["ply_thk"],
+            p["height"] - 200.0,
+            (x_front - p["length"] + 10.0,
+             floor + 100.0 + p["drawer_stack_h"],
+             z_out - p["depth"] - p["ply_thk"]),
+            color=COLORS["door"])
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "wardrobe built. Save as cad/70-interior-cabinetry/wardrobe/"
+        "wardrobe-master.FCStd and export STEP.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

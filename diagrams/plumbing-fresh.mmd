@@ -1,12 +1,13 @@
 %% Plumbing — Fresh water supply
 %% Render: mmdc -i diagrams/plumbing-fresh.mmd -o diagrams/plumbing-fresh.svg
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef cold fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
-    classDef hot fill:#fee2e2,stroke:#991b1b,stroke-width:1px
-    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
-    classDef filt fill:#ede9fe,stroke:#5b21b6,stroke-width:1px
-    classDef heat fill:#fef3c7,stroke:#92400e,stroke-width:1px
-    classDef fix fill:#f3f4f6,stroke:#374151,stroke-width:1px
+    classDef cold fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
+    classDef hot fill:#fecaca,stroke:#991b1b,stroke-width:2px,color:#000
+    classDef tank fill:#bbf7d0,stroke:#14532d,stroke-width:3px,color:#000
+    classDef filt fill:#ddd6fe,stroke:#4c1d95,stroke-width:2px,color:#000
+    classDef heat fill:#fed7aa,stroke:#7c2d12,stroke-width:2px,color:#000
+    classDef fix fill:#f3f4f6,stroke:#1f2937,stroke-width:2px,color:#000
 
     Fill[Gravity fill<br/>lockable + screened]:::cold
     City[City water inlet<br/>regulator 45 psi<br/>backflow check]:::cold

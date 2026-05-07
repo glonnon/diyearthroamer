@@ -1,0 +1,152 @@
+# -*- coding: utf-8 -*-
+"""
+build-dinette.FCMacro — parametric port-side dinette assembly.
+
+Generates a `dinette` document with simplified solids for:
+  - Vitrifrigo DP150i drawer fridge cabinet
+  - Two DOT-rated benches (forward + rear)
+  - Lagun-mounted table
+
+Origin: rear axle center / ground. +X forward, +Y up, +Z driver-side.
+Dinette is on the port (driver) side, so all Z values are positive.
+
+Source: cad/70-interior-cabinetry/dinette/SPECS.md
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+PARAMS = {
+    "dinette_x_front": 4400.0,    # X of front edge (toward cab)
+    "dinette_floor_y": 1216.0,    # interior floor
+    "dinette_z_outboard": 1117.5, # port wall (driver side, +Z)
+    "bench_depth": 460.0,
+    "seat_height": 432.0,
+    "backrest_height": 380.0,
+    "table_h": 720.0,
+    "fridge_w": 540.0,
+    "fridge_h": 1100.0,           # cabinet height to top of upper trim
+    "bench_w_each": 730.0,
+    "table_l": 800.0,
+    "table_w": 600.0,
+    "ply_thk": 18.0,
+}
+
+COLORS = {
+    "ply": (0.85, 0.78, 0.55),
+    "fabric": (0.3, 0.4, 0.55),
+    "fridge": (0.2, 0.2, 0.22),
+    "table": (0.9, 0.85, 0.7),
+    "post": (0.5, 0.5, 0.55),
+}
+
+
+def add_box(doc, name, length, width, height, xyz, color=None,
+            transparency=0):
+    box = Part.makeBox(length, height, width)
+    box.translate(Vector(*xyz))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+    if transparency:
+        obj.ViewObject.Transparency = transparency
+    return obj
+
+
+def add_cylinder(doc, name, dia, length, base_xyz, axis, color=None):
+    cyl = Part.makeCylinder(dia/2.0, length, Vector(*base_xyz),
+                            Vector(*axis))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = cyl
+    if color:
+        obj.ViewObject.ShapeColor = color
+    return obj
+
+
+def build():
+    p = PARAMS
+    doc = App.newDocument("dinette")
+
+    x = p["dinette_x_front"]
+    z = p["dinette_z_outboard"]
+    floor = p["dinette_floor_y"]
+
+    # Fridge cabinet (front of dinette)
+    add_box(doc, "fridge_cabinet",
+            p["fridge_w"], p["bench_depth"], p["fridge_h"],
+            (x - p["fridge_w"], floor, z - p["bench_depth"]),
+            color=COLORS["ply"], transparency=20)
+    add_box(doc, "fridge_appliance",
+            p["fridge_w"] - 60, p["bench_depth"] - 80, p["fridge_h"] - 100,
+            (x - p["fridge_w"] + 30, floor + 50,
+             z - p["bench_depth"] + 40),
+            color=COLORS["fridge"], transparency=10)
+    x -= p["fridge_w"]
+
+    # Front bench
+    add_box(doc, "bench_front_box",
+            p["bench_w_each"], p["bench_depth"], p["seat_height"],
+            (x - p["bench_w_each"], floor,
+             z - p["bench_depth"]),
+            color=COLORS["ply"], transparency=20)
+    add_box(doc, "bench_front_back",
+            p["bench_w_each"], 80.0, p["backrest_height"],
+            (x - p["bench_w_each"], floor + p["seat_height"],
+             z - 80.0),
+            color=COLORS["fabric"], transparency=10)
+    add_box(doc, "bench_front_cushion",
+            p["bench_w_each"] - 20, p["bench_depth"] - 20, 50.0,
+            (x - p["bench_w_each"] + 10,
+             floor + p["seat_height"] - 50,
+             z - p["bench_depth"] + 10),
+            color=COLORS["fabric"])
+    bench_front_x = x
+    x -= p["bench_w_each"]
+
+    # Table area (gap between benches; just markers)
+    add_box(doc, "table_top",
+            p["table_l"], p["table_w"], 25.0,
+            (x - (p["bench_w_each"] - p["table_l"]) / 2 - p["table_l"],
+             floor + p["table_h"],
+             z - p["bench_depth"]),
+            color=COLORS["table"])
+
+    # Lagun mount post (vertical cylinder)
+    add_cylinder(doc, "lagun_post",
+                 32.0, p["table_h"] - 25.0,
+                 (x - p["bench_w_each"]/2,
+                  floor,
+                  z - p["bench_depth"]/2),
+                 axis=(0, 1, 0),
+                 color=COLORS["post"])
+    x -= p["bench_w_each"]
+
+    # Rear bench (mirror of front)
+    add_box(doc, "bench_rear_box",
+            p["bench_w_each"], p["bench_depth"], p["seat_height"],
+            (x - p["bench_w_each"], floor,
+             z - p["bench_depth"]),
+            color=COLORS["ply"], transparency=20)
+    add_box(doc, "bench_rear_back",
+            p["bench_w_each"], 80.0, p["backrest_height"],
+            (x - p["bench_w_each"], floor + p["seat_height"],
+             z - 80.0),
+            color=COLORS["fabric"], transparency=10)
+    add_box(doc, "bench_rear_cushion",
+            p["bench_w_each"] - 20, p["bench_depth"] - 20, 50.0,
+            (x - p["bench_w_each"] + 10,
+             floor + p["seat_height"] - 50,
+             z - p["bench_depth"] + 10),
+            color=COLORS["fabric"])
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "dinette built. Save as cad/70-interior-cabinetry/dinette/"
+        "dinette-master.FCStd and export STEP.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

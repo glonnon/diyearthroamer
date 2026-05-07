@@ -6,13 +6,14 @@ Mermaid views render inline on GitHub. SVGs available via
 ## Fresh water — Mermaid view
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef cold fill:#dbeafe,stroke:#1e3a8a
-    classDef hot fill:#fee2e2,stroke:#991b1b
-    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
-    classDef filt fill:#ede9fe,stroke:#5b21b6
-    classDef heat fill:#fef3c7,stroke:#92400e
-    classDef fix fill:#f3f4f6,stroke:#374151
+    classDef cold fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
+    classDef hot fill:#fecaca,stroke:#991b1b,stroke-width:2px,color:#000
+    classDef tank fill:#bbf7d0,stroke:#14532d,stroke-width:3px,color:#000
+    classDef filt fill:#ddd6fe,stroke:#4c1d95,stroke-width:2px,color:#000
+    classDef heat fill:#fed7aa,stroke:#7c2d12,stroke-width:2px,color:#000
+    classDef fix fill:#f3f4f6,stroke:#1f2937,stroke-width:2px,color:#000
 
     Fill[Gravity fill]:::cold
     City[City inlet 45 psi]:::cold
@@ -42,11 +43,12 @@ flowchart TB
 ## Drains — Mermaid view
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart TB
-    classDef grey fill:#e5e7eb,stroke:#374151
-    classDef black fill:#fde2e4,stroke:#991b1b
-    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
-    classDef out fill:#fef3c7,stroke:#92400e,stroke-width:2px
+    classDef grey fill:#e5e7eb,stroke:#1f2937,stroke-width:2px,color:#000
+    classDef black fill:#fecaca,stroke:#7f1d1d,stroke-width:2px,color:#000
+    classDef tank fill:#bbf7d0,stroke:#14532d,stroke-width:3px,color:#000
+    classDef out fill:#fde68a,stroke:#78350f,stroke-width:3px,color:#000
 
     GalleyS[Galley sink]:::grey
     BathS[Bath sink]:::grey
@@ -64,10 +66,11 @@ flowchart TB
 ## Hydronic loop — Mermaid view
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fff','primaryTextColor':'#000','primaryBorderColor':'#000','lineColor':'#1f2937','fontFamily':'Inter, system-ui, sans-serif','fontSize':'15px'}}}%%
 flowchart LR
-    classDef heat fill:#fef3c7,stroke:#92400e,stroke-width:2px
-    classDef zone fill:#fee2e2,stroke:#991b1b
-    classDef src fill:#dbeafe,stroke:#1e3a8a
+    classDef heat fill:#fed7aa,stroke:#7c2d12,stroke-width:3px,color:#000
+    classDef zone fill:#fecaca,stroke:#991b1b,stroke-width:2px,color:#000
+    classDef src fill:#bfdbfe,stroke:#1e3a8a,stroke-width:2px,color:#000
 
     Diesel[F550 diesel tank]:::src
     Burner[Webasto Dual Top Evo 8]:::heat
