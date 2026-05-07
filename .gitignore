@@ -9,43 +9,87 @@ desktop.ini
 *.swp
 *~
 
-# FreeCAD lock + autosave
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# ---------------------------------------------------------------------- #
+# Derived artifacts — regenerate via Makefile (see HOWTO.md).
+# Source files are .FCMacro (Python), .mmd, .kicad_*, .csv, .md, etc.
+# Anything below this line is reproducible from those sources.
+# ---------------------------------------------------------------------- #
+
+# FreeCAD documents (rebuild from .FCMacro via `make cad`)
+*.FCStd
 *.FCStd1
-.~lock.*#
+*.FCBak
+.~lock.*
 *~lock~*
 
-# Blender autosaves
-*.blend@
+# Other CAD natives we never intend to keep (use STEP for exchange)
+*.f3d
+*.f3z
+*.sldprt
+*.sldasm
+*.slddrw
+
+# Neutral 3D exchange (regenerated from FreeCAD)
+*.step
+*.stp
+*.iges
+*.igs
+
+# Mesh / web (regenerated)
+*.stl
+*.glb
+*.gltf
+*.obj
+*.fbx
+*.ply
+
+# 2D vector / drawings (regenerated)
+*.dxf
+*.dwg
+
+# CAM output
+*.nc
+*.gcode
+*.tap
+
+# Renders
+*.exr
+*.tif
+*.tiff
+
+# Blender (Blender scenes are derived from STEP via scripts; do not commit)
+*.blend
 *.blend1
 *.blend2
 
-# KiCad cache / backups
+# KiCad caches / backups (the .kicad_* source files are committed)
 *-backups/
 *.bak
 *.kicad_prl
 fp-info-cache
 sym-lib-table.bak
 
-# KiCad generated exports (regenerate any time)
+# KiCad CLI exports
 electrical/kicad/exports/
 
-# Build / temp
-/tmp/
-/build/
-/out/
+# Diagram SVG/PNG (regenerate with `make diagrams`)
+diagrams/*.svg
+diagrams/*.png
 
-# Generated master documents (regenerate with scripts/build-master-doc.py)
+# Master document (regenerate with `make doc`)
 /MASTER.md
 /MASTER.pdf
 /MASTER.html
 
-# Generated diagram SVGs (regenerate with scripts/render-diagrams.sh)
-diagrams/*.svg
-
-# Weight report CSVs (regenerate with scripts/weight-cg.py)
+# Weight reports (regenerate with `make weight`)
 weight/axle-report*.csv
 
-# Python venvs (for any helper scripts)
-.venv/
-__pycache__/
-*.pyc
+# Build outputs
+/build/
+/out/
+/tmp/

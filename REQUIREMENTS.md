@@ -800,8 +800,13 @@ Either stack must produce the same canonical export set (§24.3).
 
 ### 24.4 Versioning & repo conventions
 
-- **Git LFS** for `*.FCStd, *.f3d, *.step, *.stp, *.stl, *.glb, *.dxf,
-  *.pdf, *.png, *.jpg, *.kicad_pro, *.kicad_pcb`.
+- **Source-only repo, no Git LFS.** Only text-form sources are
+  committed (`.FCMacro`, `.mmd`, `.kicad_pro`, `.kicad_sch`,
+  `.kicad_sym`, `sym-lib-table`, `*.csv`, `*.md`, `*.py`, `*.sh`,
+  `*.ps1`, `Makefile`). Every binary or rendered artifact (`.FCStd`,
+  `.step`, `.glb`, `.dxf`, `.pdf`, `.svg`, `MASTER.*`) is regenerated
+  on demand via the top-level `Makefile` and helper scripts under
+  `scripts/`. See `HOWTO.md` for the workflow.
 - **Branching:** `main` is releasable; design work on
   `design/<area>` branches; merge via PR with CAD review.
 - **Tagging:** semantic-ish tags per design freeze, e.g.

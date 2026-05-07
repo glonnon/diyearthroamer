@@ -35,15 +35,18 @@ checklist.
 
 ## Working with this repo
 
-This repo uses **Git LFS** for binary CAD/render/drawing artifacts.
+**Source-only repo** — every derived artifact (CAD models, diagrams,
+schematic PDFs, master document) is regenerated from text sources via
+the top-level [`Makefile`](Makefile). No Git LFS.
+
 After cloning:
 
 ```sh
-git lfs install
-git lfs pull
+bash scripts/install/install-ubuntu.sh        # or install-windows.ps1
+make all
 ```
 
-See `.gitattributes` for the tracked extensions.
+See [`HOWTO.md`](HOWTO.md) for the full workflow.
 
 ## Conventions
 
