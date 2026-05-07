@@ -1,7 +1,89 @@
 # Plumbing P&ID — DIY Earthroamer
 
-ASCII-rendered for review and review-by-print. A draw.io version
-(`pid.drawio`) will mirror this once locked.
+Mermaid views render inline on GitHub. SVGs available via
+`scripts/render-diagrams.sh`. ASCII detail follows for review and print.
+
+## Fresh water — Mermaid view
+
+```mermaid
+flowchart TB
+    classDef cold fill:#dbeafe,stroke:#1e3a8a
+    classDef hot fill:#fee2e2,stroke:#991b1b
+    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
+    classDef filt fill:#ede9fe,stroke:#5b21b6
+    classDef heat fill:#fef3c7,stroke:#92400e
+    classDef fix fill:#f3f4f6,stroke:#374151
+
+    Fill[Gravity fill]:::cold
+    City[City inlet 45 psi]:::cold
+    TankA[Fresh A 60 gal]:::tank
+    TankB[Fresh B 60 gal]:::tank
+    XFeed[Cross-feed]:::cold
+    Sed[5 um sediment]:::filt
+    Pump[Aquajet pump]:::cold
+    UV[Acuva UV-LED]:::filt
+    Manifold[PEX manifold]:::cold
+    DHW[Webasto DHW HX + mixer]:::heat
+
+    Galley[Galley sink]:::fix
+    GalleyFilt[Filtered tap]:::fix
+    Bath[Bath sink + shower]:::fix
+    Toilet[Toilet]:::fix
+    Ext[Exterior shower + bike rinse]:::fix
+
+    Fill --> TankA & TankB --> XFeed --> Sed --> Pump --> Manifold
+    Manifold --> UV --> GalleyFilt
+    Manifold --> Galley & Bath & Ext & Toilet
+    Manifold --> DHW --> Galley & Bath & Ext
+    City --> TankA
+    City --> TankB
+```
+
+## Drains — Mermaid view
+
+```mermaid
+flowchart TB
+    classDef grey fill:#e5e7eb,stroke:#374151
+    classDef black fill:#fde2e4,stroke:#991b1b
+    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
+    classDef out fill:#fef3c7,stroke:#92400e,stroke-width:2px
+
+    GalleyS[Galley sink]:::grey
+    BathS[Bath sink]:::grey
+    Shower[Shower pan]:::grey
+    GreyTank[Grey tank 35 gal]:::tank
+    Toilet[Flush toilet]:::black
+    BlackTank[Black tank 35 gal]:::tank
+    Dump[Common dump panel]:::out
+    Sewer[Sewer outlet]:::out
+
+    GalleyS & BathS & Shower --> GreyTank --> Dump
+    Toilet --> BlackTank --> Dump --> Sewer
+```
+
+## Hydronic loop — Mermaid view
+
+```mermaid
+flowchart LR
+    classDef heat fill:#fef3c7,stroke:#92400e,stroke-width:2px
+    classDef zone fill:#fee2e2,stroke:#991b1b
+    classDef src fill:#dbeafe,stroke:#1e3a8a
+
+    Diesel[F550 diesel tank]:::src
+    Burner[Webasto Dual Top Evo 8]:::heat
+    Reservoir[Glycol reservoir]:::heat
+    ZoneManifold[Zone manifold]:::heat
+    Cabin[Cabin fan-coils]:::zone
+    Radiant[Radiant floor]:::zone
+    Towel[Towel rack]:::zone
+    Bay[Tank-bay freeze loop]:::zone
+    DHWHX[DHW heat exchanger]:::zone
+
+    Diesel --> Burner --> Reservoir --> ZoneManifold
+    ZoneManifold --> Cabin & Radiant & Towel & Bay & DHWHX
+```
+
+## ASCII detail
 
 Color/legend convention:
 - `===` cold fresh

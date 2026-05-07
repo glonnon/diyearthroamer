@@ -1,0 +1,88 @@
+%% Electrical one-line — DIY Earthroamer
+%% Render: mmdc -i diagrams/electrical-oneline.mmd -o diagrams/electrical-oneline.svg
+flowchart TB
+    classDef bus fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#000
+    classDef batt fill:#dcfce7,stroke:#166534,stroke-width:1px
+    classDef inv fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
+    classDef solar fill:#fde68a,stroke:#78350f,stroke-width:1px
+    classDef ac fill:#fce7f3,stroke:#9d174d,stroke-width:1px
+    classDef load fill:#ede9fe,stroke:#5b21b6,stroke-width:1px
+    classDef proto fill:#e5e7eb,stroke:#374151,stroke-width:1px
+
+    %% Solar path
+    PVarr[4x 320W panels<br/>2s2p ~75 Voc / 36 Isc]:::solar
+    Combiner[Roof combiner<br/>15A MC4 fuses]:::proto
+    Gland[Scanstrut roof gland]:::proto
+    MPPT[Victron MPPT 250/100]:::solar
+
+    %% Battery path
+    Epoch[Epoch 48V<br/>4x 100Ah modules<br/>~20.5 kWh, heated, CAN]:::batt
+    ClassT[Class T 250A]:::proto
+    Shunt[SmartShunt 500A<br/>VE.Direct]:::batt
+    BusPos[+48V Bus Bar]:::bus
+    BusGnd[GND DC Bus<br/>single-point]:::bus
+
+    %% 48V loads
+    CB200[CB 200A]:::proto
+    CB100[CB 100A]:::proto
+    CB50[CB 50A]:::proto
+    CB30[CB 30A]:::proto
+    Multi[Victron MultiPlus-II<br/>48 / 5000<br/>VE.Bus]:::inv
+    Orion[Orion XS 48-24<br/>50A out]:::inv
+    Mabru[Mabru SCS 12000<br/>mini-split heat pump]:::load
+
+    %% 24V sub-bus
+    ANL60[ANL 60A]:::proto
+    Bus24[+24V Sub-Bus]:::bus
+    DCDC2412[24-12V 20A]:::inv
+    Bus12[+12V Legacy]:::bus
+    Lights[Lighting LED]:::load
+    Pumps[Pump + Fans + MaxxAir]:::load
+    Heater[Webasto blower<br/>12V control]:::load
+    LiftBox[Lift-box actuators<br/>2x Linak LA36]:::load
+
+    %% AC path
+    Shore[30A Shore Inlet<br/>SmartPlug]:::ac
+    EMS[Progressive EMS]:::ac
+    Iso[Galvanic isolator]:::ac
+    LoadCenter[120V AC<br/>Load Center]:::ac
+    Galley[Galley GFCI x2]:::load
+    Cooktop[Induction cooktop]:::load
+    Microwave[Microwave]:::load
+    Bath[Bath GFCI]:::load
+    Bedside[Bedside outlets]:::load
+    Ext[Exterior GFCI]:::load
+    Service[Service bay<br/>e-bike charger]:::load
+
+    %% Alternator
+    Alt[F550 12V alternator]:::ac
+    Boost[12-48V boost ~30A]:::inv
+
+    %% Monitoring
+    Cerbo[Cerbo GX + Touch 50<br/>VE.Bus / VE.Direct / CAN]:::inv
+
+    %% Connections
+    PVarr --> Combiner --> Gland --> MPPT
+    MPPT -- 6 AWG --> CB100 --> BusPos
+
+    Epoch -- 4/0 AWG --> ClassT --> BusPos
+    Epoch -- 4/0 AWG --> Shunt --> BusGnd
+
+    BusPos --> CB200 --> Multi
+    BusPos --> CB50 --> Orion
+    BusPos --> CB30 --> Mabru
+
+    Orion --> ANL60 --> Bus24
+    Bus24 --> Lights & Pumps & Heater & LiftBox
+    Bus24 --> DCDC2412 --> Bus12
+
+    Alt -- 4/0 AWG --> Boost --> BusPos
+
+    Shore --> EMS --> Iso --> Multi
+    Multi --> LoadCenter
+    LoadCenter --> Galley & Cooktop & Microwave & Bath & Bedside & Ext & Service
+
+    Multi -. VE.Bus .-> Cerbo
+    MPPT -. VE.Direct .-> Cerbo
+    Shunt -. VE.Direct .-> Cerbo
+    Epoch -. CAN BMS .-> Cerbo

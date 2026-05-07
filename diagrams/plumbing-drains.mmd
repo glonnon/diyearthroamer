@@ -1,0 +1,40 @@
+%% Plumbing — Drains and waste
+%% Render: mmdc -i diagrams/plumbing-drains.mmd -o diagrams/plumbing-drains.svg
+flowchart TB
+    classDef grey fill:#e5e7eb,stroke:#374151,stroke-width:1px
+    classDef black fill:#fde2e4,stroke:#991b1b,stroke-width:1px
+    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
+    classDef vent fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
+    classDef out fill:#fef3c7,stroke:#92400e,stroke-width:2px
+
+    GalleySink[Galley sink<br/>P-trap]:::grey
+    BathSink[Bath sink<br/>P-trap]:::grey
+    Shower[Shower pan<br/>P-trap]:::grey
+    GreyManifold[Grey trap manifold]:::grey
+    GreyTank[Grey tank 35 gal<br/>heated, baffled]:::tank
+    GreyVent[Grey vent<br/>through roof]:::vent
+    GreyValve[3 in gate valve]:::grey
+
+    Toilet[Flush toilet<br/>Dometic 320]:::black
+    BlackTank[Black tank 35 gal<br/>heated, w/ rinse]:::tank
+    BlackVent[Black vent<br/>true roof vent]:::vent
+    BlackValve[3 in gate valve]:::black
+    Rinse[Tank rinse spray<br/>fresh + check]:::grey
+
+    DumpPanel[Common dump panel<br/>3 in bayonet]:::out
+    Macerator[Macerator option<br/>Sani-Con]:::out
+    Sewer[Sewer outlet]:::out
+
+    GalleySink --> GreyManifold
+    BathSink --> GreyManifold
+    Shower --> GreyManifold
+    GreyManifold --> GreyTank
+    GreyTank --- GreyVent
+    GreyTank --> GreyValve --> DumpPanel
+
+    Toilet --> BlackTank
+    BlackTank --- BlackVent
+    Rinse --> BlackTank
+    BlackTank --> BlackValve --> DumpPanel
+    DumpPanel --> Sewer
+    DumpPanel --> Macerator --> Sewer

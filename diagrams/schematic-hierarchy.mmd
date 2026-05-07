@@ -1,0 +1,38 @@
+%% KiCad hierarchical schematic structure
+%% Render: mmdc -i diagrams/schematic-hierarchy.mmd -o diagrams/schematic-hierarchy.svg
+flowchart TB
+    classDef root fill:#fde68a,stroke:#78350f,stroke-width:2px
+    classDef power fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
+    classDef ac fill:#fce7f3,stroke:#9d174d,stroke-width:1px
+    classDef ctrl fill:#dcfce7,stroke:#166534,stroke-width:1px
+
+    Root[Root<br/>shore, alternator, battery, bus]:::root
+
+    V48[48V_Bus<br/>Epoch x4, MultiPlus, MPPT, Mabru]:::power
+    V24[24V_SubBus<br/>Orion XS, ANL 60A, fuse blocks]:::power
+    V12[12V_Legacy<br/>24-12V, radio, sensors]:::power
+    Solar[Solar<br/>4x 320W, combiner, gland]:::power
+
+    AC[AC_Distribution<br/>Shore, EMS, Iso, load center]:::ac
+
+    Lights[Lighting<br/>interior + exterior LED]:::ctrl
+    HVAC[HVAC_Control<br/>Mabru, Webasto, MaxxAir, fans]:::ctrl
+    Plumb[Plumbing_Control<br/>pump, UV, SeeLevel, heater pads]:::ctrl
+    Lift[LiftBox_Control<br/>Linak x2, sync, interlocks]:::ctrl
+    Comms[Comms_AV<br/>Starlink, Pepwave, USB-C PD, TV]:::ctrl
+
+    Root --> V48
+    Root --> V24
+    Root --> V12
+    Root --> Solar
+    Root --> AC
+    Root --> Lights
+    Root --> HVAC
+    Root --> Plumb
+    Root --> Lift
+    Root --> Comms
+    V48 -. PV+/PV- .-> Solar
+    V48 -. AC IN/OUT .-> AC
+    V48 -. +24V .-> V24
+    V24 -. +12V .-> V12
+    V24 -. branches .-> Lights & HVAC & Plumb & Lift & Comms

@@ -39,6 +39,12 @@ electrical/kicad/exports/
 /MASTER.pdf
 /MASTER.html
 
+# Generated diagram SVGs (regenerate with scripts/render-diagrams.sh)
+diagrams/*.svg
+
+# Weight report CSVs (regenerate with scripts/weight-cg.py)
+weight/axle-report*.csv
+
 # Python venvs (for any helper scripts)
 .venv/
 __pycache__/

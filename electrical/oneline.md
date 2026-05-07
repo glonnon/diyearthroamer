@@ -1,8 +1,58 @@
 # Electrical System One-Line
 
-ASCII one-line of the locked architecture (ADR-0004). KiCad project
-will replace this with a proper schematic once parts/symbols selected,
-but this is the source of truth for sizing today.
+Locked architecture (ADR-0004). KiCad project will replace this with a
+proper schematic once sub-sheets are drawn, but this is the source of
+truth for sizing today.
+
+## Mermaid view (renders inline on GitHub; SVG via `scripts/render-diagrams.sh`)
+
+```mermaid
+flowchart TB
+    classDef bus fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#000
+    classDef batt fill:#dcfce7,stroke:#166534
+    classDef inv fill:#dbeafe,stroke:#1e3a8a
+    classDef solar fill:#fde68a,stroke:#78350f
+    classDef ac fill:#fce7f3,stroke:#9d174d
+    classDef load fill:#ede9fe,stroke:#5b21b6
+    classDef proto fill:#e5e7eb,stroke:#374151
+
+    PVarr[4x 320W panels<br/>2s2p ~75 Voc]:::solar
+    Combiner[Combiner<br/>15A MC4 fuses]:::proto
+    MPPT[MPPT 250/100]:::solar
+    Epoch[Epoch 48V x4<br/>~20 kWh]:::batt
+    ClassT[Class T 250A]:::proto
+    Shunt[SmartShunt 500A]:::batt
+    BusPos[+48V Bus]:::bus
+    BusGnd[GND DC]:::bus
+    Multi[MultiPlus-II<br/>48 / 5000]:::inv
+    Orion[Orion XS 48-24]:::inv
+    Mabru[Mabru SCS 12000]:::load
+    Bus24[+24V Sub-Bus]:::bus
+    Bus12[+12V Legacy]:::bus
+    Loads24[Lights / Pumps / Fans / Heater / Lift-box]:::load
+    Shore[Shore 30A SmartPlug]:::ac
+    EMS[EMS]:::ac
+    LoadCenter[120V Load Center]:::ac
+    ACLoads[Galley / Cooktop / Microwave / Bath / Bed / Ext]:::load
+    Alt[F550 alternator]:::ac
+    Boost[12-48V boost]:::inv
+    Cerbo[Cerbo GX]:::inv
+
+    PVarr --> Combiner --> MPPT --> BusPos
+    Epoch --> ClassT --> BusPos
+    Epoch --> Shunt --> BusGnd
+    BusPos --> Multi & Orion & Mabru
+    Orion --> Bus24 --> Loads24
+    Bus24 --> Bus12
+    Alt --> Boost --> BusPos
+    Shore --> EMS --> Multi --> LoadCenter --> ACLoads
+    Multi -. VE.Bus .-> Cerbo
+    MPPT -. VE.Direct .-> Cerbo
+    Shunt -. VE.Direct .-> Cerbo
+    Epoch -. CAN BMS .-> Cerbo
+```
+
+## ASCII one-line (full detail)
 
 ```
                              SOLAR ARRAY

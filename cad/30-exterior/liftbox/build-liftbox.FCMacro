@@ -1,0 +1,153 @@
+# -*- coding: utf-8 -*-
+"""
+build-liftbox.FCMacro — parametric bike lift-box assembly placeholder.
+
+Creates a new FreeCAD document `liftbox` with simplified solids for
+the enclosed bike box, parallelogram arms, structural carrier, and
+two Linak LA36 actuators in stowed (travel) position.
+
+Origin convention: vehicle origin = rear axle center at ground.
++X forward, +Y up, +Z driver-side (LH). Lift-box hangs aft of the
+rear axle (negative X).
+
+Sourced from:
+  - cad/30-exterior/liftbox-kinematics.md
+  - ADR-0006 (enclosed lift-box)
+  - ADR-0012 (dual electric linear actuators)
+  - cad/30-exterior/liftbox/forces.csv
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+PARAMS = {
+    # Box (interior clear; exterior adds ~50mm wall)
+    "box_clear_l": 75 * 25.4,    # 1905
+    "box_clear_w": 50 * 25.4,    # 1270
+    "box_clear_h": 36 * 25.4,    # 914
+    "wall_thk": 50.0,            # frame + sheet
+
+    # Stowed position
+    "stowed_x_mid": -65 * 25.4,  # mid of box, ~65" aft of rear axle
+    "stowed_y_floor": 18 * 25.4, # 18" road clearance to box bottom
+
+    # Carrier (hitch-class structural carrier on frame extension)
+    "carrier_l": 30 * 25.4,
+    "carrier_w": 60 * 25.4,
+    "carrier_h": 6 * 25.4,
+    "carrier_y": 16 * 25.4,      # below box
+    "carrier_x": -25 * 25.4,     # tied to frame end
+
+    # Arms (parallelogram, 18" stroke)
+    "arm_length": 22 * 25.4,
+    "arm_thk": 75.0,             # 3" sq tube simplified
+    "arm_pivot_carrier_x": -25 * 25.4,
+    "arm_pivot_carrier_y": 18 * 25.4,
+    "arm_z_outer": 24 * 25.4,    # one arm each side
+    "arm_z_inner": 22 * 25.4,    # second arm of parallelogram
+
+    # Actuators (Linak LA36, retracted ~600 mm length, 80 mm dia)
+    "act_len": 600.0,
+    "act_dia": 80.0,
+}
+
+COLORS = {
+    "box": (0.85, 0.85, 0.8),
+    "carrier": (0.3, 0.3, 0.35),
+    "arm": (0.5, 0.5, 0.55),
+    "actuator": (0.9, 0.6, 0.2),
+}
+
+
+def add_box(doc, name, length, width, height, xyz, color=None):
+    box = Part.makeBox(length, height, width)
+    box.translate(Vector(*xyz))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+        obj.ViewObject.Transparency = 30
+    return obj
+
+
+def add_cylinder(doc, name, dia, length, base_xyz, axis, color=None):
+    cyl = Part.makeCylinder(dia/2.0, length, Vector(*base_xyz),
+                            Vector(*axis))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = cyl
+    if color:
+        obj.ViewObject.ShapeColor = color
+        obj.ViewObject.Transparency = 20
+    return obj
+
+
+def build():
+    p = PARAMS
+    doc = App.newDocument("liftbox")
+
+    # Box exterior (interior + walls)
+    box_l = p["box_clear_l"] + 2*p["wall_thk"]
+    box_w = p["box_clear_w"] + 2*p["wall_thk"]
+    box_h = p["box_clear_h"] + 2*p["wall_thk"]
+    add_box(doc, "liftbox_enclosure",
+            box_l, box_w, box_h,
+            (p["stowed_x_mid"] - box_l/2,
+             p["stowed_y_floor"],
+             -box_w/2),
+            color=COLORS["box"])
+
+    # Carrier
+    add_box(doc, "carrier",
+            p["carrier_l"], p["carrier_w"], p["carrier_h"],
+            (p["carrier_x"] - p["carrier_l"]/2,
+             p["carrier_y"],
+             -p["carrier_w"]/2),
+            color=COLORS["carrier"])
+
+    # Parallelogram arms (4 arms total: 2 each side, lower + upper)
+    for side in (+1, -1):
+        z_arm = side * p["arm_z_outer"]
+        # lower arm
+        add_box(doc, f"arm_lower_{'P' if side>0 else 'C'}",
+                p["arm_length"], p["arm_thk"], p["arm_thk"],
+                (p["arm_pivot_carrier_x"],
+                 p["carrier_y"] + p["carrier_h"],
+                 z_arm),
+                color=COLORS["arm"])
+        # upper arm (offset 200mm above)
+        add_box(doc, f"arm_upper_{'P' if side>0 else 'C'}",
+                p["arm_length"], p["arm_thk"], p["arm_thk"],
+                (p["arm_pivot_carrier_x"],
+                 p["carrier_y"] + p["carrier_h"] + 200.0,
+                 z_arm),
+                color=COLORS["arm"])
+
+    # Actuators (one each side, between carrier and box bottom)
+    for side in (+1, -1):
+        z_act = side * (p["arm_z_outer"] - 60.0)
+        add_cylinder(doc,
+                     f"actuator_{'P' if side>0 else 'C'}",
+                     p["act_dia"], p["act_len"],
+                     (p["arm_pivot_carrier_x"] + 100.0,
+                      p["carrier_y"] + p["carrier_h"] + 50.0,
+                      z_act),
+                     axis=(1, 1, 0),  # angled up + forward to box
+                     color=COLORS["actuator"])
+
+    # Origin marker
+    o_sphere = Part.makeSphere(40.0)
+    o = doc.addObject("Part::Feature", "_ORIGIN_rear_axle")
+    o.Shape = o_sphere
+    o.ViewObject.ShapeColor = (1.0, 0.0, 0.0)
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "liftbox built (stowed position). Save as cad/30-exterior/"
+        "liftbox/liftbox-master.FCStd; verify departure-angle envelope "
+        "against shell tail taper.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

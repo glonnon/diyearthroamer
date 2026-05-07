@@ -1,27 +1,52 @@
 id,subsystem,item,mass_lb,station_x_in,note
-,chassis,F550 crew cab flatbed (curb),9000,0,placeholder; replace with actual weigh
-,shell,Global Trekker 21' shell (empty),2200,72,vendor spec; tail-taper variant
-,shell,Global Trekker OEM subframe,400,60,
-,electrical,Epoch 48V 100Ah module,128,48,4 modules x 128 lb (estimate); FRONT bay
-,electrical,Victron MultiPlus-II 48/5000,66,48,front systems bay
-,electrical,Victron MPPT + DC-DC + monitoring,30,48,
-,solar,4x 320W rigid panels + bonded standoffs,150,108,ADR-0014; flat 2x2; ~38 lb each panel
-,hvac,Diesel hydronic heater + reservoir,90,60,
-,hvac,Mini-split (head + condenser),110,90,head inside; condenser in vented locker
-,plumbing,Fresh tank A empty (poly, 60 gal port),60,71,ADR-0015; mount low + forward
-,plumbing,Fresh tank B empty (poly, 60 gal curb),60,71,ADR-0015
-,plumbing,Fresh tank A full,500,71,60 gal x 8.34
-,plumbing,Fresh tank B full,500,71,60 gal x 8.34
-,plumbing,Grey tank empty,40,108,
-,plumbing,Grey tank full,374,108,40 gal x 8.34
-,plumbing,Black tank empty,40,108,
-,plumbing,Black tank full,334,108,40 gal x 8.34
-,kitchen,Galley + appliances,250,84,
-,bathroom,Bath module + fixtures,200,96,
-,bed,Mattress + base + cabover platform,180,18,over crew cab
-,bike-box,Empty enclosed lift-box + lift mech,300,168,REAR; long lever arm
-,bike-box,3 bikes (avg 30 lb each),90,168,
-,interior,Cabinetry (hybrid al + ply),450,84,distributed
-,occupants,2 adults,360,12,driver + passenger seats
-total,,,,,
-note,,,,,"station_x_in: longitudinal distance from rear axle (positive = forward). Negative would be aft. Replace placeholder values as CAD locks dimensions. Compute per-axle loads in spreadsheet."
+,chassis,F550 4x4 crew cab cab-and-chassis (curb),8200,98,typical 4x4 crew CG ~98 in fwd of rear axle (front 4500 / rear 3700 split)
+,chassis,Diesel fuel main 40 gal,280,90,7 lb/gal x 40
+,chassis,Diesel fuel aux 50 gal,350,55,Transfer Flow under-bed; aft of frame midpoint
+,chassis,Front winch bumper + winch,200,200,fwd of front axle
+,chassis,Rear bumper + spare carrier,150,-72,aft of rear axle
+,chassis,41" spare tire on swing-out,140,-78,
+,shell,Global Trekker 21' shell empty,2200,25,shell extends -126 to +126; tail taper shifts CG fwd
+,shell,Global Trekker OEM subframe,400,0,spans shell footprint
+,exterior,Aluminum flatbed (6061+5052),415,0,ADR-0013
+,electrical,Epoch 48V 100Ah module,512,48,4x 128 lb in fwd battery bay
+,electrical,Multiplus + MPPT + Cerbo + monitoring,120,48,fwd bay
+,electrical,DC distribution + AC load center,40,40,
+,solar,4x 320W rigid panels + bonded standoffs,150,30,roof; CG height tracked separately
+,hvac,Webasto Dual Top Evo 8 + reservoir,95,60,fwd systems bay
+,hvac,Mabru SCS 12000 head + condenser locker,110,40,head inboard; condenser in side locker
+,hvac,Hydronic radiant assembly + plates,80,30,floor distributed
+,hvac,Standalone diesel air heater backup,15,60,small
+,plumbing,Fresh tank A empty (poly 60 gal port),60,90,ADR-0015
+,plumbing,Fresh tank B empty (poly 60 gal curb),60,90,ADR-0015
+,plumbing,Fresh tank A full,500,90,60 gal x 8.34
+,plumbing,Fresh tank B full,500,90,60 gal x 8.34
+,plumbing,Grey tank 35 gal empty,40,-30,heated; aft of rear axle
+,plumbing,Grey tank 35 gal full,334,-30,
+,plumbing,Black tank 35 gal empty,40,-30,heated
+,plumbing,Black tank 35 gal full,334,-30,
+,plumbing,Pump + accumulator + filters + UV,40,80,service bay
+,plumbing,PEX manifold + lines + valves,50,30,distributed
+,kitchen,Galley cabinetry + counter + sink + faucet,330,72,curb side, middle of shell
+,kitchen,Induction cooktop + microwave + range hood,70,72,
+,kitchen,Drawer fridge (Vitrifrigo DP150i),110,84,port side across aisle
+,bathroom,Bath module + shower + vanity + toilet + plumbing,260,-30,aft of rear axle in 21' layout
+,bathroom,Hydronic towel rack + radiant zones,30,-30,
+,living,Dinette benches + table + cushions,200,30,port side fwd of bath
+,bed,Cabover platform + frame,90,170,over cab roof
+,bed,Olympic queen mattress + base,80,170,
+,bed,Headboard + storage shelves,60,180,fwd of bed
+,interior,Wardrobe + drawers + door area,250,-15,full-height port side
+,interior,Cabinet hardware + finish,150,30,distributed
+,interior,Flooring + wall panels + ceiling finish,200,0,distributed
+,interior,Insulation augmentation + thermal break,80,0,distributed
+,bike-box,Empty enclosed lift-box (aluminum),200,-60,hangs off rear bumper / hitch
+,bike-box,Lift mechanism + actuators + carrier,150,-50,closer to rear of frame
+,bike-box,3 bikes (avg 30 lb),90,-60,
+,bike-box,Bike tools + workstand + chargers,50,-60,
+,exterior,Awning,55,0,curb side
+,exterior,Roof rack + ladder,90,15,roof
+,exterior,Side toolboxes (under bed),80,30,under-bed lockers
+,exterior,Recovery gear + Maxtrax,80,-30,storage areas
+,occupants,Driver + passenger,360,150,front cab seats
+,occupants,Cargo / personal effects,200,30,distributed midship
+note,,,,,"station_x_in: longitudinal distance forward of rear axle in inches. Negative = aft of rear axle. F_f = sum(M_i * X_i) / wheelbase. Update with measured values once chassis is on hand."

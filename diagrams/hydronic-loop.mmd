@@ -1,0 +1,35 @@
+%% Hydronic heating loop — Webasto Dual Top Evo 8
+%% Render: mmdc -i diagrams/hydronic-loop.mmd -o diagrams/hydronic-loop.svg
+flowchart LR
+    classDef heat fill:#fef3c7,stroke:#92400e,stroke-width:2px
+    classDef zone fill:#fee2e2,stroke:#991b1b,stroke-width:1px
+    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:1px
+    classDef src fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
+
+    Diesel[F550 main fuel tank<br/>40 gal diesel]:::src
+    Burner[Webasto Dual Top Evo 8<br/>~27 kBTU/hr<br/>+ 120V AC element]:::heat
+    Reservoir[Glycol reservoir<br/>+ expansion tank]:::heat
+    Pump[Circulation pump]:::heat
+    ZoneManifold[Zone manifold<br/>thermostatic mixers]:::heat
+
+    Cabin[Cabin fan-coils<br/>living, bedroom, bath]:::zone
+    Radiant[Radiant floor<br/>living, galley, bath<br/>PEX-Al-PEX in plates]:::zone
+    Towel[Hydronic towel rack<br/>bath]:::zone
+    TankBay[Tank-bay freeze loop<br/>fresh A/B, grey, black]:::zone
+    DHWHX[DHW heat exchanger<br/>w/ thermostatic mixer]:::tank
+    Engine[Engine pre-heat tap<br/>optional]:::src
+
+    Diesel --> Burner
+    Burner --> Reservoir --> Pump --> ZoneManifold
+    ZoneManifold --> Cabin
+    ZoneManifold --> Radiant
+    ZoneManifold --> Towel
+    ZoneManifold --> TankBay
+    ZoneManifold --> DHWHX
+    ZoneManifold -. shore mode .-> Engine
+
+    Cabin -. return .-> Burner
+    Radiant -. return .-> Burner
+    Towel -. return .-> Burner
+    TankBay -. return .-> Burner
+    DHWHX -. return .-> Burner

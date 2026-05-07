@@ -1,0 +1,21 @@
+parameter,value,unit,note
+box_empty_mass,200,lb,aluminum frame + 0.090 sheet
+bikes_max,3,count,
+bike_avg_mass,35,lb,high-end MTB / e-bike capable to 80 lb each
+accessories,30,lb,helmets, tools, chargers
+total_design_mass,335,lb,empty + bikes + accessories
+safety_factor,1.25,multiplier,ABYC for moving loads
+design_lift,419,lb,= total * SF
+travel_stroke,18,in,ground to stowed
+arm_length,22,in,parallelogram bar
+arm_pivot_to_actuator,4,in,moment arm for actuator force
+mech_advantage_low,0.18,ratio,= pivot_to_actuator / arm_length
+mech_advantage_high,0.40,ratio,at top of stroke
+actuator_force_low,1163,lbf,worst case = design_lift / 2 / mech_advantage_low
+actuator_force_high,524,lbf,best case
+actuator_count,2,count,one each side
+actuator_rating_each,1500,lbf,Linak LA36 / Progressive Auto PA-04
+total_capacity,3000,lbf,2 actuators
+margin_low_position,2.58,multiplier,3000 / (419 * 2 * 0.5 / 0.18 force per actuator simplified)
+margin_high_position,5.7,multiplier,
+note,,,Margins are conservative; geometry will be refined in CAD. Re-run when arm length and pivot offset are locked.

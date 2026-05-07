@@ -1,0 +1,46 @@
+%% Plumbing — Fresh water supply
+%% Render: mmdc -i diagrams/plumbing-fresh.mmd -o diagrams/plumbing-fresh.svg
+flowchart TB
+    classDef cold fill:#dbeafe,stroke:#1e3a8a,stroke-width:1px
+    classDef hot fill:#fee2e2,stroke:#991b1b,stroke-width:1px
+    classDef tank fill:#dcfce7,stroke:#166534,stroke-width:2px
+    classDef filt fill:#ede9fe,stroke:#5b21b6,stroke-width:1px
+    classDef heat fill:#fef3c7,stroke:#92400e,stroke-width:1px
+    classDef fix fill:#f3f4f6,stroke:#374151,stroke-width:1px
+
+    Fill[Gravity fill<br/>lockable + screened]:::cold
+    City[City water inlet<br/>regulator 45 psi<br/>backflow check]:::cold
+    BlowOut[Winter blow-out tee]:::cold
+    Manifold[Fill manifold<br/>w/ tank-level vent]:::cold
+    TankA[Fresh A 60 gal<br/>port, heated, insulated]:::tank
+    TankB[Fresh B 60 gal<br/>curb, heated, insulated]:::tank
+    BV_A[Ball valve A]:::cold
+    BV_B[Ball valve B]:::cold
+    XFeed[Cross-feed tee]:::cold
+    Sed[5 um sediment filter]:::filt
+    Pump[Aquajet pump<br/>variable speed<br/>+ accumulator]:::cold
+    UV[Acuva UV-LED filter<br/>potable polish]:::filt
+    PEXManifold[PEX-A manifold<br/>per-fixture shutoff]:::cold
+    DHW[Webasto Dual Top Evo 8<br/>DHW heat exchanger]:::heat
+    Mix[Thermostatic mixer<br/>50 C set]:::hot
+
+    GalleyCold[Galley sink cold]:::fix
+    GalleyHot[Galley sink hot]:::fix
+    GalleyFilt[Galley filtered tap<br/>UV potable]:::fix
+    BathCold[Bath sink cold]:::fix
+    BathHot[Bath sink hot]:::fix
+    Shower[Thermo shower mixer<br/>+ wand]:::fix
+    Toilet[Toilet supply<br/>+ vacuum breaker]:::fix
+    ExtShower[Exterior shower hot/cold]:::fix
+    BikeRinse[Bike rinse hose]:::fix
+
+    Fill --> Manifold
+    City --> BlowOut --> Manifold
+    Manifold --> TankA & TankB
+    TankA --> BV_A --> XFeed
+    TankB --> BV_B --> XFeed
+    XFeed --> Sed --> Pump --> PEXManifold
+    PEXManifold --> UV --> GalleyFilt
+    PEXManifold --> GalleyCold & BathCold & ExtShower & BikeRinse & Toilet
+    PEXManifold --> DHW --> Mix
+    Mix --> GalleyHot & BathHot & Shower & ExtShower

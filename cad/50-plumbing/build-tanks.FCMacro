@@ -1,0 +1,133 @@
+# -*- coding: utf-8 -*-
+"""
+build-tanks.FCMacro — parametric tank placeholders against the F550
+chassis master.
+
+Run inside FreeCAD: Macro -> Macros -> select this file -> Execute.
+Creates a new document `tanks` with simplified bounding boxes for:
+
+  - Fresh tank A (port, forward)
+  - Fresh tank B (curb, forward)
+  - Grey tank (aft, inboard)
+  - Black tank (aft, inboard, opposite side)
+  - Pump bay (forward of fresh tanks)
+
+Origin convention: rear axle center, ground level. +X forward, +Y up,
++Z driver-side (LH).
+
+Sourced from: plumbing/tank-layout.md (ADR-0015), weight/master.csv.
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+PARAMS = {
+    # Fresh tanks (ADR-0015)
+    "fresh_x": 90 * 25.4,        # ~2,286 mm forward of rear axle
+    "fresh_y": 400.0,            # mounted low, just above frame top - tank
+    "fresh_l": 36 * 25.4,        # 36" long in vehicle X
+    "fresh_w": 24 * 25.4,        # 24" wide in vehicle Z (side-to-side)
+    "fresh_h": 18 * 25.4,        # 18" high
+    "fresh_z_port": -750.0,      # port side (driver, +Z is LH so port = -)
+    "fresh_z_curb": +750.0,      # curb side
+
+    # Grey tank
+    "grey_x": -30 * 25.4,        # aft of rear axle (~-762 mm)
+    "grey_y": 400.0,
+    "grey_l": 30 * 25.4,
+    "grey_w": 24 * 25.4,
+    "grey_h": 18 * 25.4,
+    "grey_z": -500.0,
+
+    # Black tank
+    "black_x": -30 * 25.4,
+    "black_y": 400.0,
+    "black_l": 30 * 25.4,
+    "black_w": 24 * 25.4,
+    "black_h": 18 * 25.4,
+    "black_z": +500.0,
+
+    # Pump bay (service locker)
+    "pump_x": 110 * 25.4,
+    "pump_y": 700.0,
+    "pump_l": 18 * 25.4,
+    "pump_w": 16 * 25.4,
+    "pump_h": 14 * 25.4,
+    "pump_z": +900.0,            # exterior curb-side service locker
+}
+
+COLORS = {
+    "fresh": (0.4, 0.6, 0.95),
+    "grey":  (0.5, 0.5, 0.5),
+    "black": (0.2, 0.2, 0.2),
+    "pump":  (0.9, 0.9, 0.4),
+}
+
+
+def add_box(doc, name, length, width, height, xyz, color=None):
+    """length=X, width=Z, height=Y. Place by min corner XYZ."""
+    box = Part.makeBox(length, height, width)
+    box.translate(Vector(*xyz))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+        obj.ViewObject.Transparency = 40
+    return obj
+
+
+def build():
+    p = PARAMS
+    doc = App.newDocument("tanks")
+
+    add_box(doc, "fresh_A_port",
+            p["fresh_l"], p["fresh_w"], p["fresh_h"],
+            (p["fresh_x"] - p["fresh_l"]/2,
+             p["fresh_y"],
+             p["fresh_z_port"] - p["fresh_w"]/2),
+            color=COLORS["fresh"])
+
+    add_box(doc, "fresh_B_curb",
+            p["fresh_l"], p["fresh_w"], p["fresh_h"],
+            (p["fresh_x"] - p["fresh_l"]/2,
+             p["fresh_y"],
+             p["fresh_z_curb"] - p["fresh_w"]/2),
+            color=COLORS["fresh"])
+
+    add_box(doc, "grey_tank",
+            p["grey_l"], p["grey_w"], p["grey_h"],
+            (p["grey_x"] - p["grey_l"]/2,
+             p["grey_y"],
+             p["grey_z"] - p["grey_w"]/2),
+            color=COLORS["grey"])
+
+    add_box(doc, "black_tank",
+            p["black_l"], p["black_w"], p["black_h"],
+            (p["black_x"] - p["black_l"]/2,
+             p["black_y"],
+             p["black_z"] - p["black_w"]/2),
+            color=COLORS["black"])
+
+    add_box(doc, "pump_bay",
+            p["pump_l"], p["pump_w"], p["pump_h"],
+            (p["pump_x"] - p["pump_l"]/2,
+             p["pump_y"],
+             p["pump_z"] - p["pump_w"]/2),
+            color=COLORS["pump"])
+
+    # Origin marker
+    sphere = Part.makeSphere(40.0)
+    o = doc.addObject("Part::Feature", "_ORIGIN_rear_axle")
+    o.Shape = sphere
+    o.ViewObject.ShapeColor = (1.0, 0.0, 0.0)
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "tanks built. Save as cad/50-plumbing/tanks-master.FCStd "
+        "and export STEP for use in cad/00-vehicle assembly.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

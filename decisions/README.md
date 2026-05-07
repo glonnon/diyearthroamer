@@ -22,6 +22,7 @@ renumbered. Use `0000-template.md` to start a new ADR.
 | [0013](0013-flatbed-material-aluminum.md) | Flatbed material — Aluminum (6061-T6 + 5052-H32) | Accepted |
 | [0014](0014-solar-flat-2x2-1280w.md) | Solar — 4× 320W flat 2×2 array, no tilt | Accepted |
 | [0015](0015-fresh-tank-split-2x60.md) | Fresh tank — 2× 60 gal split | Accepted |
+| [0016](0016-tires-continental-mpt81.md) | Tires — Continental MPT 81 (military-spec, 6,779 lb each) | Accepted |
 
 ## Open items
 
