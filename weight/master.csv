@@ -1,0 +1,25 @@
+id,subsystem,item,mass_lb,station_x_in,note
+,chassis,F550 crew cab flatbed (curb),9000,0,placeholder; replace with actual weigh
+,shell,Global Trekker 21' shell (empty),2200,72,vendor spec; tail-taper variant
+,shell,Global Trekker OEM subframe,400,60,
+,electrical,Epoch 48V 100Ah module,128,48,4 modules x 128 lb (estimate); FRONT bay
+,electrical,Victron MultiPlus-II 48/5000,66,48,front systems bay
+,electrical,Victron MPPT + DC-DC + monitoring,30,48,
+,solar,Rigid panels + mounts (1.2 kW),140,108,roof; CG height noted in CAD model
+,hvac,Diesel hydronic heater + reservoir,90,60,
+,hvac,Mini-split (head + condenser),110,90,head inside; condenser in vented locker
+,plumbing,Fresh water tank empty (poly, 120 gal),120,60,FORWARD; mount low
+,plumbing,Fresh water full,1000,60,120 gal x 8.34 lb/gal
+,plumbing,Grey tank empty,40,108,
+,plumbing,Grey tank full,374,108,40 gal x 8.34
+,plumbing,Black tank empty,40,108,
+,plumbing,Black tank full,334,108,40 gal x 8.34
+,kitchen,Galley + appliances,250,84,
+,bathroom,Bath module + fixtures,200,96,
+,bed,Mattress + base + cabover platform,180,18,over crew cab
+,bike-box,Empty enclosed lift-box + lift mech,300,168,REAR; long lever arm
+,bike-box,3 bikes (avg 30 lb each),90,168,
+,interior,Cabinetry (hybrid al + ply),450,84,distributed
+,occupants,2 adults,360,12,driver + passenger seats
+total,,,,,
+note,,,,,"station_x_in: longitudinal distance from rear axle (positive = forward). Negative would be aft. Replace placeholder values as CAD locks dimensions. Compute per-axle loads in spreadsheet."

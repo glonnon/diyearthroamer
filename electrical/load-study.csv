@@ -1,0 +1,26 @@
+circuit,bus_v,load_w,hours_per_day,wh_per_day,duty,notes
+fridge_freezer,24,55,24,660,cycling ~50%,12V/24V compressor (Isotherm/Vitrifrigo); duty implicit in W
+led_lighting_overhead,24,30,5,150,evening,
+led_lighting_accent,24,10,4,40,evening,
+maxxair_fans,24,12,8,96,2 fans average,
+water_pump,24,80,0.5,40,intermittent,
+hydronic_blower_glow,24,60,3,180,winter usage; 0 in summer
+diesel_heater_blower,24,30,3,90,if standalone air heater used in summer
+mini_split_cooling,48,800,4,3200,hot day; could exceed 5 kWh in heat wave
+mini_split_heating,48,700,3,2100,cold morning; supplements hydronic
+induction_cooktop,120,1500,0.75,1125,2 burners avg 750W; 45 min/day
+microwave_convection,120,1200,0.25,300,15 min/day
+range_hood,24,30,0.5,15,
+toilet_flush_pump,24,40,0.05,2,
+fresh_water_uv,24,15,1,15,run when cooking/drinking
+electronics_starlink,12,75,8,600,Mini ~50W; Standard up to 100W
+router_pepwave,12,15,24,360,
+laptop_workstation,120,80,4,320,via 120V AC outlet
+tv_audio,12,40,3,120,
+charging_phones_etc,5,60,4,240,USB-C PD across multiple ports
+inverter_idle_loss,48,25,24,600,Victron MultiPlus standby
+dcdc_48_24_loss,48,20,24,480,~5% of pass-through
+total_summer,,,,~7000,exclude heating loads
+total_winter,,,,~6000,exclude AC; include hydronic + heater
+total_peak_day,,,,~10000,hot day with cooking + AC + remote work
+note,,,,,Daily Wh sized to 48V usable bank: 20 kWh allows ~2 days at peak with no sun.

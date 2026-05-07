@@ -669,6 +669,7 @@ end mountain or gravel bikes**. No flatbed garage box.
 | D15 | Bed | **Fixed cabover bed**, king if fits else queen |
 | D16 | Cabinetry | **Hybrid aluminum + Baltic birch plywood** |
 | D17 | Bike carry | **Enclosed motorized lift-box** at the rear (no flatbed garage) |
+| D18 | CAD stack | **Stack A — FreeCAD + KiCad + Blender + Inkscape + draw.io** (all OSS) |
 
 ### Still open
 
@@ -687,7 +688,8 @@ end mountain or gravel bikes**. No flatbed garage box.
    micro-pack for the bike box.
 6. **O6 — Roof solar layout / tilt:** flat vs tilt brackets to hit
    1,000–1,300 W on 21' roof while preserving walking lanes.
-7. **O7 — CAD tooling and file-format strategy** (see §24).
+7. ~~O7 — CAD tooling~~ **Closed: Stack A (FreeCAD + KiCad + Blender +
+   Inkscape + draw.io). See §24 and `/decisions/0008-cad-stack.md`.**
 
 ## 22. Build Phases (Suggested)
 

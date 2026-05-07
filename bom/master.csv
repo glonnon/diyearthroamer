@@ -1,0 +1,35 @@
+id,subsystem,part,vendor,part_number,qty,unit_cost_usd,extended_cost_usd,status,notes
+,chassis,F550 4x4 crew cab cab-and-chassis,Ford,F550-CC-4x4,1,,,planned,base vehicle (ADR-0001)
+,chassis,Liquid Springs CLASS suspension,Liquid Springs,,1,,,planned,§2
+,chassis,41" tires (set + spare),,,5,,,planned,verify load rating
+,chassis,17" forged wheels,,,5,,,planned,
+,chassis,Aux fuel tank 50-65 gal,Transfer Flow,,1,,,planned,
+,shell,Global Trekker 21' shell,Global Trekker,GT21,1,,,planned,ADR-0002
+,shell,Global Trekker OEM subframe,Global Trekker,,1,,,planned,ADR-0003
+,electrical,Epoch 48V 100Ah module,Epoch,EPV4850-H,4,,,planned,ADR-0004; heated variant
+,electrical,Victron MultiPlus-II 48/5000,Victron,PMP482505010,1,,,planned,
+,electrical,Victron Cerbo GX,Victron,BPP900450100,1,,,planned,
+,electrical,Victron SmartShunt 500A,Victron,SHU050150050,1,,,planned,
+,electrical,Victron MPPT 250/100,Victron,SCC125110510,1,,,planned,sized to array
+,electrical,Victron Orion XS 48/24,Victron,,1,,,planned,sub-bus converter
+,solar,Rigid mono panels (~330W),,,4,,,planned,1.0–1.3 kW total (ADR pending)
+,hvac,Diesel hydronic heater,,,1,,,planned,Webasto Dual Top Evo / Aqua-Hot (O4)
+,hvac,Mini-split heat pump head + condenser,,,1,,,planned,Mabru/Velit/Webasto FCF (O3)
+,hvac,MaxxAir Deluxe fan,MaxxAir,00-07000K,2,,,planned,
+,plumbing,Fresh water tank 60 gal x2,,,2,,,planned,100–120 gal total
+,plumbing,Grey tank 35 gal,,,1,,,planned,30–40 gal
+,plumbing,Black tank 35 gal,,,1,,,planned,30–40 gal
+,plumbing,Variable-speed water pump,Remco,Aquajet RV,1,,,planned,
+,plumbing,Acuva UV-LED filter,Acuva,,1,,,planned,potable
+,kitchen,12V/24V compressor fridge,,,1,,,planned,5–7 cu ft drawer or cabinet
+,kitchen,Induction cooktop 2-burner,,,1,,,planned,120V via inverter
+,kitchen,Stainless undermount sink,,,1,,,planned,
+,bathroom,Flush toilet,Dometic,320,1,,,planned,ADR pending
+,bathroom,Hydronic towel rack,,,1,,,planned,off diesel hydronic
+,bed,Custom queen/king mattress,,,1,,,planned,king if cabover allows (O2)
+,bike-box,Linear actuators (1500 lb class),,,2,,,planned,O5 — actuator vs hydraulic
+,bike-box,Aluminum frame + sheet,,,1,,,planned,fabricated
+,interior,Baltic birch ply 18mm 5'x5',,,10,,,planned,cabinets
+,interior,6061 aluminum 1.5"x1.5"x1/8" angle 24',,,10,,,planned,cabinet skeleton
+,interior,Blum drawer slides,Blum,Movento,20,,,planned,
+,interior,Southco compression latch,Southco,,30,,,planned,travel-rated

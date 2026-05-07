@@ -1,0 +1,37 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# FreeCAD lock + autosave
+*.FCStd1
+.~lock.*#
+*~lock~*
+
+# Blender autosaves
+*.blend@
+*.blend1
+*.blend2
+
+# KiCad cache / backups
+*-backups/
+*.bak
+*.kicad_prl
+fp-info-cache
+sym-lib-table.bak
+
+# Build / temp
+/tmp/
+/build/
+/out/
+
+# Python venvs (for any helper scripts)
+.venv/
+__pycache__/
+*.pyc
