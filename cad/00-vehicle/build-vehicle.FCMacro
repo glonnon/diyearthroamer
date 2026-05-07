@@ -1,0 +1,145 @@
+# -*- coding: utf-8 -*-
+"""
+build-vehicle.FCMacro — top-level vehicle assembly orchestrator.
+
+Runs every sub-macro in order, then merges all resulting documents
+into a single `vehicle_full` assembly. Use this to spot interference
+or clearance issues across the whole truck.
+
+Run inside FreeCAD: Macro -> Macros -> File -> Add -> select this file
+-> Execute. Each sub-macro produces its own document; afterward this
+script copies every shape into a new `vehicle_full` document so the
+whole vehicle renders in one viewport.
+
+Origin convention (REQUIREMENTS.md §4 / cad/README.md):
+  Origin = center of rear axle, at ground.
+  +X forward, +Y up, +Z driver-side (LH).
+
+Sub-macros invoked (in order):
+  1. cad/00-vehicle/build-master.FCMacro          F550 + shell + subframe
+  2. cad/50-plumbing/build-tanks.FCMacro          fresh A/B + grey + black + pump bay
+  3. cad/30-exterior/liftbox/build-liftbox.FCMacro  bike lift box + arms + actuators
+  4. cad/70-interior-cabinetry/galley/build-galley.FCMacro
+  5. cad/70-interior-cabinetry/dinette/build-dinette.FCMacro
+  6. cad/70-interior-cabinetry/bath/build-bath.FCMacro
+  7. cad/70-interior-cabinetry/wardrobe/build-wardrobe.FCMacro
+  8. cad/70-interior-cabinetry/cabover/build-cabover.FCMacro
+
+Outputs a `vehicle_full` document with every shape colored per the
+sub-macro defaults. Save manually as `cad/00-vehicle/full-vehicle-
+assembly.FCStd` and export STEP for Blender import / livability
+review.
+"""
+
+import os
+import FreeCAD as App
+import Part
+
+# --- Configure path to the repo's cad/ tree ----------------------- #
+# Edit if your local clone path differs.
+REPO_CAD_BASE = os.path.expanduser("~/diyearthroamer/cad")
+
+SUB_MACROS = [
+    ("00-vehicle/build-master.FCMacro",                      "f550_master"),
+    ("50-plumbing/build-tanks.FCMacro",                      "tanks"),
+    ("30-exterior/liftbox/build-liftbox.FCMacro",            "liftbox"),
+    ("70-interior-cabinetry/galley/build-galley.FCMacro",    "galley"),
+    ("70-interior-cabinetry/dinette/build-dinette.FCMacro",  "dinette"),
+    ("70-interior-cabinetry/bath/build-bath.FCMacro",        "bath"),
+    ("70-interior-cabinetry/wardrobe/build-wardrobe.FCMacro","wardrobe"),
+    ("70-interior-cabinetry/cabover/build-cabover.FCMacro",  "cabover"),
+]
+
+
+def run_sub_macro(rel_path):
+    """Execute a sub-macro in a fresh namespace; it creates its own
+    FreeCAD document via App.newDocument(...).
+    """
+    full = os.path.join(REPO_CAD_BASE, rel_path)
+    if not os.path.exists(full):
+        App.Console.PrintWarning(f"  Skipped (not found): {full}\n")
+        return False
+    ns = {"__name__": "__main__", "__file__": full}
+    with open(full, "r", encoding="utf-8") as f:
+        code = f.read()
+    exec(compile(code, full, "exec"), ns)
+    return True
+
+
+def merge_into_vehicle(target_name="vehicle_full"):
+    """Copy every shape from every other open document into one
+    target document. Original docs remain open for inspection.
+    """
+    if target_name in App.listDocuments():
+        App.closeDocument(target_name)
+    target = App.newDocument(target_name)
+    total = 0
+    for doc_name, doc in list(App.listDocuments().items()):
+        if doc_name == target_name:
+            continue
+        for obj in doc.Objects:
+            if not hasattr(obj, "Shape") or obj.Shape is None:
+                continue
+            try:
+                shape = obj.Shape.copy()
+            except Exception:
+                continue
+            new_obj = target.addObject(
+                "Part::Feature", f"{doc_name}__{obj.Name}"
+            )
+            new_obj.Shape = shape
+            try:
+                if obj.ViewObject and hasattr(obj.ViewObject, "ShapeColor"):
+                    new_obj.ViewObject.ShapeColor = obj.ViewObject.ShapeColor
+                if obj.ViewObject and hasattr(obj.ViewObject, "Transparency"):
+                    new_obj.ViewObject.Transparency = obj.ViewObject.Transparency
+            except Exception:
+                pass
+            total += 1
+    target.recompute()
+    App.Console.PrintMessage(
+        f"\nMerged {total} shapes into '{target_name}'.\n"
+    )
+    return target
+
+
+def bounding_box_report(doc):
+    """Print a quick AABB summary per part — useful to eyeball
+    placement after merge.
+    """
+    App.Console.PrintMessage("\n--- Bounding boxes (mm, vehicle origin) ---\n")
+    App.Console.PrintMessage(
+        f"{'name':50}  X: min  max     Y: min  max     Z: min  max\n"
+    )
+    for obj in doc.Objects:
+        if not hasattr(obj, "Shape") or obj.Shape is None:
+            continue
+        bb = obj.Shape.BoundBox
+        App.Console.PrintMessage(
+            f"{obj.Name[:50]:50}  "
+            f"{bb.XMin:7.0f} {bb.XMax:7.0f}    "
+            f"{bb.YMin:7.0f} {bb.YMax:7.0f}    "
+            f"{bb.ZMin:7.0f} {bb.ZMax:7.0f}\n"
+        )
+
+
+def run_all():
+    App.Console.PrintMessage(
+        f"Vehicle assembly orchestrator\n"
+        f"Sub-macro base: {REPO_CAD_BASE}\n"
+        f"Running {len(SUB_MACROS)} sub-macros...\n\n"
+    )
+    for rel, label in SUB_MACROS:
+        App.Console.PrintMessage(f"  -> {label}  ({rel})\n")
+        run_sub_macro(rel)
+    target = merge_into_vehicle()
+    bounding_box_report(target)
+    App.Console.PrintMessage(
+        "\nNext: File -> Save As 'cad/00-vehicle/full-vehicle-assembly.FCStd'\n"
+        "      File -> Export -> '*.step' for Blender / external review\n"
+        "      Use Part -> Compound Filter / Section to inspect interference.\n"
+    )
+
+
+if __name__ == "__main__":
+    run_all()

@@ -1,40 +1,160 @@
 id,subsystem,part,vendor,part_number,qty,unit_cost_usd,extended_cost_usd,status,notes
-,chassis,F550 4x4 crew cab cab-and-chassis,Ford,F550-CC-4x4,1,,,planned,base vehicle (ADR-0001)
-,chassis,Liquid Springs CLASS suspension,Liquid Springs,,1,,,planned,§2
-,chassis,41" tires (set + spare),,,5,,,planned,verify load rating
-,chassis,17" forged wheels,,,5,,,planned,
-,chassis,Aux fuel tank 50-65 gal,Transfer Flow,,1,,,planned,
-,shell,Global Trekker 21' shell,Global Trekker,GT21,1,,,planned,ADR-0002
-,shell,Global Trekker OEM subframe,Global Trekker,,1,,,planned,ADR-0003
-,electrical,Epoch 48V 100Ah module,Epoch,EPV4850-H,4,,,planned,ADR-0004; heated variant
-,electrical,Victron MultiPlus-II 48/5000,Victron,PMP482505010,1,,,planned,
-,electrical,Victron Cerbo GX,Victron,BPP900450100,1,,,planned,
-,electrical,Victron SmartShunt 500A,Victron,SHU050150050,1,,,planned,
-,electrical,Victron MPPT 250/100,Victron,SCC125110510,1,,,planned,sized to array
-,electrical,Victron Orion XS 48/24,Victron,,1,,,planned,sub-bus converter
-,solar,320W mono rigid panel,,,4,,,planned,ADR-0014 — 1280W flat 2x2
-,solar,Bonded panel standoffs + Sika 252,,,1,,,planned,no roof penetrations
-,solar,Scanstrut roof gland,Scanstrut,DS-MULTI-01,1,,,planned,single PV gland
-,solar,MC4 inline 15A fuse,,,4,,,planned,one per string side
-,exterior,Aluminum flatbed (6061-T6 + 5052-H32),,,1,,,planned,ADR-0013
-,hvac,Webasto Dual Top Evo 8 (diesel hydronic),Webasto,,1,,,planned,ADR-0009
-,hvac,Mabru SCS 12000 mini-split (48V DC),Mabru,SCS-12000,1,,,planned,ADR-0010
-,hvac,Standalone diesel air heater (backup),Autoterm,Air 2D,1,,,optional,redundancy
-,hvac,MaxxAir Deluxe fan,MaxxAir,00-07000K,2,,,planned,
-,plumbing,Fresh water tank 60 gal,,,2,,,planned,ADR-0015 — 2x60 split
-,plumbing,Grey tank 35 gal,,,1,,,planned,30–40 gal
-,plumbing,Black tank 35 gal,,,1,,,planned,30–40 gal
-,plumbing,Variable-speed water pump,Remco,Aquajet RV,1,,,planned,
-,plumbing,Acuva UV-LED filter,Acuva,,1,,,planned,potable
-,kitchen,12V/24V compressor fridge,,,1,,,planned,5–7 cu ft drawer or cabinet
-,kitchen,Induction cooktop 2-burner,,,1,,,planned,120V via inverter
-,kitchen,Stainless undermount sink,,,1,,,planned,
-,bathroom,Flush toilet,Dometic,320,1,,,planned,ADR pending
-,bathroom,Hydronic towel rack,,,1,,,planned,off diesel hydronic
-,bed,Olympic queen mattress (66"x80" custom),,,1,,,planned,ADR-0011
-,bike-box,Linear actuators (1500 lb class),Linak,LA36,2,,,planned,ADR-0012; PA-04 alt
-,bike-box,Aluminum frame + sheet,,,1,,,planned,fabricated
-,interior,Baltic birch ply 18mm 5'x5',,,10,,,planned,cabinets
-,interior,6061 aluminum 1.5"x1.5"x1/8" angle 24',,,10,,,planned,cabinet skeleton
-,interior,Blum drawer slides,Blum,Movento,20,,,planned,
-,interior,Southco compression latch,Southco,,30,,,planned,travel-rated
+1,chassis,F550 4x4 crew cab cab-and-chassis 6.7L PowerStroke 176 in WB,Ford,F550-CC-4x4-176,1,75000,75000,planned,ADR-0001; pricing varies by trim/MY
+2,chassis,Liquid Springs CLASS suspension F550 kit,Liquid Springs,CLASS-F550,1,8500,8500,planned,front + rear self-leveling
+3,chassis,Continental MPT 81 365/85R20 NATO tire,Continental,MPT81-365/85R20,5,1500,7500,planned,ADR-0016; 6779 lb load each
+4,chassis,Hutchinson 20 in 2-piece forged wheel,Hutchinson,VFI-D38,5,650,3250,planned,bead-lock optional
+5,chassis,Transfer Flow aux fuel tank 50 gal,Transfer Flow,080-01-15571,1,1700,1700,planned,under-bed mount
+6,chassis,CBI Off-Road front bumper + winch mount,CBI Off-Road,F550-FRONT-WINCH,1,3200,3200,planned,
+7,chassis,Warn 16500 lb winch,Warn,Series 16.5ti,1,2400,2400,planned,
+8,chassis,Aluminess rear bumper + spare carrier,Aluminess,F550-REAR-SPARE,1,2800,2800,planned,
+9,chassis,Re-gear axles to 4.88,Yukon Gear,YGK-F250-488,2,800,1600,planned,front + rear
+10,chassis,Hydroboost brake upgrade,Vanco,F550-HYDRO,1,1200,1200,planned,for 41 in tires
+11,chassis,Skid plates engine + trans + tcase + aux fuel,RCI,F550-SKID-FULL,1,2500,2500,planned,
+12,shell,Global Trekker 21 ft composite shell w/ tail taper,Global Trekker,GT21-TAILTAPER,1,85000,85000,planned,ADR-0002
+13,shell,Global Trekker OEM torsion-free subframe,Global Trekker,GT-SUBFRAME-21,1,9500,9500,planned,ADR-0003
+14,shell,Tern entry door + step + screen,Tern Overland,T-DOOR-COMPOSITE,1,1800,1800,planned,
+15,shell,Tern dual-pane acrylic window 24x16,Tern Overland,T-WIN-24-16,5,650,3250,planned,5 windows
+16,shell,Tern dual-pane acrylic window 36x16,Tern Overland,T-WIN-36-16,1,950,950,planned,curb-side picture
+17,shell,Egress window cabover (RVIA spec),Tern Overland,T-WIN-EGRESS,1,950,950,planned,
+18,exterior,Aluminum flatbed 23 ft x 84 in custom,Custom Fab,DIY-ER-FLATBED,1,7500,7500,planned,ADR-0013; 6061-T6 + 5052-H32
+19,exterior,L-track aluminum (per ft),Macs Tie-Downs,L-TRACK-ALUM,40,15,600,planned,bed + bike box
+20,exterior,Side toolboxes (under-bed),Owl Vans,SIDEBOX-F550,2,950,1900,planned,
+21,exterior,Rear motorized step electric,Lippert,LIP-3700134,1,750,750,planned,entry door
+22,exterior,Roof rack walkable composite,Front Runner,FR-SLIMLINE-21FT,1,2200,2200,planned,
+23,exterior,Roof ladder,Front Runner,FR-LADDER-TELE,1,500,500,planned,
+24,exterior,Maxtrax MK2 recovery boards,Maxtrax,MTXMK2,2,300,600,planned,
+25,exterior,Awning 14 ft Fiamma F80s 12V,Fiamma,F80S-14,1,1800,1800,planned,
+26,electrical,Epoch 48V 100Ah LiFePO4 module heated BMS CAN,Epoch,EPV4850-H,4,3500,14000,planned,ADR-0004; ~20 kWh
+27,electrical,Victron MultiPlus-II 48/5000,Victron,PMP482505010,1,3000,3000,planned,
+28,electrical,Victron SmartSolar MPPT 250/100,Victron,SCC125110510,1,750,750,planned,ADR-0014
+29,electrical,Victron Cerbo GX,Victron,BPP900450100,1,400,400,planned,
+30,electrical,Victron GX Touch 50,Victron,BPP900465050,1,300,300,planned,
+31,electrical,Victron SmartShunt 500A,Victron,SHU050150050,1,200,200,planned,
+32,electrical,Victron Orion XS 48/24-50,Victron,ORI484850080,1,400,400,planned,
+33,electrical,Victron Orion-Tr Smart 24/12-30,Victron,ORI241236120,1,250,250,planned,12V sub-bus
+34,electrical,Class T fuse 250A + holder,Blue Sea / Littelfuse,5006/JLLN-250,1,150,150,planned,
+35,electrical,Blue Sea busbar 250A 5-pos,Blue Sea Systems,2126,2,90,180,planned,+48V and GND
+36,electrical,Blue Sea DC breaker 200A,Blue Sea Systems,7180,1,75,75,planned,Multiplus
+37,electrical,Blue Sea DC breaker 100A,Blue Sea Systems,7186,1,55,55,planned,MPPT
+38,electrical,Blue Sea DC breaker 50A,Blue Sea Systems,7184,1,45,45,planned,Orion XS
+39,electrical,Blue Sea DC breaker 30A,Blue Sea Systems,7182,1,40,40,planned,Mabru
+40,electrical,Blue Sea ATC fuse block 12-circuit,Blue Sea Systems,5026,2,75,150,planned,24V + 12V
+41,electrical,SmartPlug shore inlet 30A 125V,SmartPlug,BM30PB,1,150,150,planned,
+42,electrical,Progressive EMS-PT30X surge protector,Progressive Industries,EMS-PT30X,1,400,400,planned,
+43,electrical,ProMariner galvanic isolator 30A,ProMariner,30130,1,150,150,planned,
+44,electrical,Pacer 4/0 AWG marine cable (per ft),Pacer Group,PWG_4/0,30,12,360,planned,inverter + battery
+45,electrical,Pacer 6 AWG marine cable (per ft),Pacer Group,PWG_6,40,4,160,planned,MPPT + Orion
+46,electrical,Pacer 10 AWG marine cable (per ft),Pacer Group,PWG_10,80,2,160,planned,branches
+47,electrical,Pacer 14 AWG marine cable (per ft),Pacer Group,PWG_14,200,1,200,planned,branches
+48,electrical,Ancor heat-shrink ring lug assortment,Ancor,202205-PKG,1,250,250,planned,
+49,electrical,Wakespeed WS500 alternator regulator,Wakespeed,WS500,1,750,750,planned,12V high-output charge
+50,electrical,Sterling 12-48V boost charger 30A,Sterling Power,BB12-48-30,1,650,650,planned,alternator path
+51,electrical,Nations 240A high-output 12V alternator,Nations Starter Alternator,NSA-240-F550,1,800,800,planned,
+52,electrical,AC load center 30A main + 12 branches,Square D,QO112L125PRB,1,180,180,planned,
+53,electrical,GFCI duplex receptacle,Leviton,X7599-W,5,30,150,planned,galley + bath + ext
+54,electrical,Marine 12/2 cable (per ft),Ancor,12/2-MARINE,200,1.5,300,planned,AC branches
+55,solar,Renogy 320W mono rigid panel,Renogy,RNG-320D,4,360,1440,planned,
+56,solar,Bonded panel standoff kit + 3M VHB + Sika 252,DIY-fab,SOLAR-MOUNT-DIY,1,500,500,planned,
+57,solar,Scanstrut DS-MULTI-01 roof gland,Scanstrut,DS-MULTI-01,1,90,90,planned,
+58,solar,MidNite Solar MNPV3 combiner box,MidNite Solar,MNPV3,1,150,150,planned,
+59,solar,MC4 inline 15A fuse,Renogy,RNG-FUSE-MC4-15,4,12,48,planned,one per string side
+60,solar,Anderson SB50 portable input,Anderson,SB50-50V,1,30,30,planned,curb-side
+61,hvac,Webasto Dual Top Evo 8 diesel hydronic,Webasto,Dual Top Evo 8,1,5500,5500,planned,ADR-0009
+62,hvac,Mabru SCS 12000 mini-split heat pump 48V DC,Mabru Power,SCS-12000-48V,1,4500,4500,planned,ADR-0010
+63,hvac,Autoterm Air 2D backup diesel air heater,Autoterm,AIR-2D,1,1100,1100,planned,redundancy
+64,hvac,MaxxAir Deluxe 7500 fan,MaxxAir,00-07500K,2,400,800,planned,
+65,hvac,FantasticVent bath exhaust fan,Fan-Tastic Vent,803350-CW,1,180,180,planned,humidity sensor
+66,hvac,Hydronic fan-coil heat exchanger,Sure Marine Service,HEAT-COIL-12V,3,400,1200,planned,living + bedroom + bath
+67,hvac,Caleffi zone valve 3-way,Caleffi,Z45 series,4,80,320,planned,radiant zones + DHW + tank
+68,hvac,Uponor PEX-Al-PEX 5/8 in (per ft),Uponor,F1101000,400,3,1200,planned,radiant floor
+69,hvac,Uponor radiant heat-transfer plate,Uponor,A5040320,40,15,600,planned,
+70,hvac,Caleffi mixing valve thermostatic,Caleffi,520006A,2,180,360,planned,DHW + radiant
+71,hvac,Runtal hydronic towel warmer,Runtal,LSE-30-9-2002,1,650,650,planned,ADR-0007
+72,hvac,Glycol RV antifreeze (per gal),Camco,30797,5,15,75,planned,initial fill + refills
+73,hvac,Truma CP Plus thermostat,Truma,40020-22300,1,400,400,planned,or custom on Cerbo
+74,plumbing,Class A Customs 60 gal fresh water tank,Class A Customs,FW60-LP,2,275,550,planned,ADR-0015
+75,plumbing,RecPro 35 gal grey tank,RecPro,RP-35GREY,1,180,180,planned,
+76,plumbing,RecPro 35 gal black tank,RecPro,RP-35BLACK,1,180,180,planned,
+77,plumbing,Tank heating pad 12V silicone,Ultra-Heat,UH-12-TANK,4,80,320,planned,one per wet tank
+78,plumbing,Remco Aquajet RV variable-speed pump,Remco,55AQUAJET-ARV,1,400,400,planned,
+79,plumbing,Shurflo accumulator tank 1L,Shurflo,182-200,1,80,80,planned,
+80,plumbing,Acuva Eco UV-LED filter,Acuva,Eco-NX-Si,1,750,750,planned,potable
+81,plumbing,Watts sediment 5 micron filter,Watts,WPSD-1075,1,40,40,planned,
+82,plumbing,Watts carbon block filter,Watts,WCB-PLUS,1,30,30,planned,
+83,plumbing,Whale Elegance galley faucet,Whale,RT2498,1,250,250,planned,
+84,plumbing,Whale Elegance bath faucet,Whale,RT2502,1,200,200,planned,
+85,plumbing,Whale Elegance shower mixer,Whale,RT2640,1,300,300,planned,thermostatic
+86,plumbing,Dometic 320 china flush toilet,Dometic,302320081,1,350,350,planned,
+87,plumbing,Sani-Con macerator 12V,Thetford,32999,1,400,400,planned,
+88,plumbing,Garnet SeeLevel 709-RVC tank monitor,Garnet,709-RVC,1,400,400,planned,RV-C 4 tanks
+89,plumbing,Uponor PEX-A 1/2 in (per ft),Uponor,F1060500,200,1.5,300,planned,distribution
+90,plumbing,Uponor PEX-A 3/4 in (per ft),Uponor,F1060750,80,2.2,176,planned,trunk
+91,plumbing,Uponor ProPEX manifold 6-port,Uponor,A2660625,2,180,360,planned,fresh + hot
+92,plumbing,Uponor expansion fittings (assortment),Uponor,EXPAND-KIT,1,300,300,planned,
+93,plumbing,Vacuum breaker for toilet supply,Watts,288A,1,40,40,planned,code
+94,plumbing,3 in valves + bayonet + hose,Camco,39411,1,150,150,planned,dump panel
+95,kitchen,Vitrifrigo DP150i drawer fridge 12/24V,Vitrifrigo,DP150iXD4,1,2500,2500,planned,
+96,kitchen,Empava 20 in 2-burner induction cooktop,Empava,EMPV-IDC12B2,1,400,400,planned,
+97,kitchen,Contoure microwave-convection,Contoure,RV-150S-CON,1,500,500,planned,
+98,kitchen,Kraus 16x18 undermount stainless sink,Kraus,KHU101-14,1,250,250,planned,
+99,kitchen,Corian solid surface counter (per sf),DuPont,CORIAN-1216,16,90,1440,planned,~16 sf galley + bath
+100,kitchen,Best by Broan range hood recirc,Broan,QML30,1,300,300,planned,
+101,kitchen,Knife magnet recessed,Fastcap,KNIFE-MAG-12,1,40,40,planned,
+102,bathroom,Specialty Recreation 30x30 shower pan,Specialty Recreation,SP3030,1,450,450,planned,
+103,bathroom,FRP shower wall panels (each),Better Bath,FRP-WHITE-SHOWER,3,250,750,planned,3 walls
+104,bathroom,Vanity vessel sink ceramic,Kraus,KCV-141,1,180,180,planned,
+105,bathroom,Bi-fold composite shower door,Lasco,BF-SHOWER-30,1,400,400,planned,
+106,bathroom,Medicine cabinet w/ LED,Specialty Recreation,SR-MC-LED,1,250,250,planned,
+107,bed,Olympic queen latex mattress 8 in,My Green Mattress,OLY-LATEX-8,1,1800,1800,planned,ADR-0011 custom 66x80
+108,bed,Cabover frame ladder 6061 angle (per ft),McMaster-Carr,9000T132,40,8,320,planned,
+109,bed,Headboard fabric + foam + ply,DIY,HEADBOARD-DIY,1,250,250,planned,
+110,bed,Lumitec reading light dimmable,Lumitec,Caprera2,2,180,360,planned,
+111,interior,Baltic birch ply 18mm 5x5 ft,Local lumberyard,BB-18-5x5,12,140,1680,planned,cabinetry
+112,interior,Baltic birch ply 12mm 5x5 ft,Local lumberyard,BB-12-5x5,4,90,360,planned,
+113,interior,Baltic birch ply 9mm 5x5 ft,Local lumberyard,BB-9-5x5,4,70,280,planned,
+114,interior,6061 aluminum 1.5x1.5x1/8 angle (per ft),McMaster-Carr,9001K76,200,7,1400,planned,cabinet skeleton
+115,interior,6061 aluminum 2x2x1/8 angle (per ft),McMaster-Carr,9001K91,40,12,480,planned,bed + heavy modules
+116,interior,5052 aluminum 0.090 sheet 4x8 ft,Industrial Metal Supply,5052-090-4X8,4,250,1000,planned,backs and decks
+117,interior,Blum Movento drawer slide soft-close 21 in,Blum,Movento-560H,30,55,1650,planned,
+118,interior,Blum Clip-Top hinge soft-close,Blum,71B3550,40,12,480,planned,
+119,interior,Southco compression latch,Southco,M1-301-4,30,15,450,planned,travel doors
+120,interior,Sugatsune piano hinge soft-close,Sugatsune,SOSS-218,8,40,320,planned,bench tops
+121,interior,Schroth 3-point seat belt FMVSS,Schroth,SR-PROF-1,2,250,500,planned,DOT dinette
+122,interior,HPL laminate sheet 4x8 ft,Wilsonart,WIL-HPL-4x8,4,80,320,planned,faces
+123,interior,LVP flooring radiant-rated (per sf),COREtec,COR-VV-PRO,140,5,700,planned,~140 sf
+124,interior,Insulation closed-cell 1 in (per sf),Hunter Panels,Xci-Foil-1,200,2.5,500,planned,thermal break
+125,interior,Marine vinyl fabric (per yd),Marine Connection,MCL-MARINE-VINYL,8,30,240,planned,cushions
+126,interior,Cushion foam 4 in HD (per cu ft),The Foam Factory,FF-HD-4,12,30,360,planned,benches
+127,bike-box,Aluminum frame fab 75x50x36 in,Custom Fab,LIFTBOX-FRAME-DIY,1,2200,2200,planned,ADR-0006
+128,bike-box,Linak LA36 linear actuator 24V 18 in stroke,Linak,LA36-1500-18,2,750,1500,planned,ADR-0012
+129,bike-box,Linak CB-D dual-actuator controller,Linak,CB-D-24V,1,400,400,planned,sync
+130,bike-box,Reese Class V 2.5 in receiver hitch fab,Custom Fab,LIFTBOX-CARRIER-DIY,1,1500,1500,planned,
+131,bike-box,Kuat fork mount,Kuat,Trio,3,90,270,planned,inside box
+132,bike-box,Door gaskets + gas struts,Sea-Dog,DOOR-SEAL-KIT,1,250,250,planned,
+133,bike-box,LED rear-light repeater,Optronics,STL18RB-MV,1,80,80,planned,
+134,comms,Starlink Mini kit,Starlink,STARLINK-MINI,1,500,500,planned,
+135,comms,Starlink monthly service (year),Starlink,SL-ROAM-MTH,12,75,900,planned,subscription
+136,comms,Pepwave MAX BR1 Pro 5G router,Peplink,MAX-BR1-PRO-5GH,1,1100,1100,planned,
+137,comms,Furrion 24 in 12V LED TV,Furrion,FEFS24F8A,1,250,250,planned,
+138,comms,Fusion Marine soundbar,Fusion,RA670,1,500,500,planned,
+139,comms,Garmin GPSMAP 67i + tracking,Garmin,010-02603-00,1,500,500,planned,
+140,comms,Midland MXT575 GMRS radio,Midland,MXT575,1,400,400,planned,
+141,comms,Pepwave external roof antenna,Peplink,Pepwave Mobility 22G,1,250,250,planned,
+142,lighting,Lumitec Caprera2 dimmable dome,Lumitec,Caprera2-WW,8,180,1440,planned,interior cabin
+143,lighting,Imtra Sigma reading light,Imtra,FRT-SIGMA-WW,4,75,300,planned,
+144,lighting,Lumitec Capri RGBW awning strip,Lumitec,Capri2-RGBW-WW-12FT,1,500,500,planned,
+145,lighting,Baja Designs S2 Sport pod (pair),Baja Designs,541801,4,170,680,planned,scene + reverse
+146,lighting,Baja Designs S8 30 in roof bar,Baja Designs,723001,1,1100,1100,planned,off-road forward
+147,lighting,Switch-Pros SP-9100 control panel,Switch-Pros,SP-9100,1,800,800,planned,scene + ext lighting
+148,lighting,Cabin LED strip 24V dimmable (per ft),Lumitec,5MLED-24V,40,15,600,planned,under-cabinet etc
+149,fasteners,Stainless 18-8 fastener bulk kit,McMaster-Carr,SS-FASTENER-KIT,1,400,400,planned,
+150,fasteners,Sika 252 sealant cartridge,Sika,SIKA-252-300ML,12,18,216,planned,
+151,fasteners,Sika 295 UV glazing,Sika,SIKA-295UV-300ML,4,25,100,planned,windows
+152,fasteners,3M 5200 marine sealant,3M,06520-FAST,4,18,72,planned,permanent bonding
+153,fasteners,Tef-Gel galvanic isolation,Ultra Safety Systems,TEF-GEL-1OZ,1,40,40,planned,al-to-steel
+154,fasteners,Heat shrink tubing 3:1 marine grade kit,Ancor,303106,1,150,150,planned,
+155,labor,Subframe install + flatbed fab labor,Local TIG shop,LABOR-SUBFRAME,80,150,12000,planned,80 hours
+156,labor,Shell mounting + door + windows labor,Local fab,LABOR-SHELL,40,150,6000,planned,40 hours
+157,labor,Electrical commissioning ABYC,ABYC tech,LABOR-ABYC,40,200,8000,planned,certification
+158,labor,Hydronic + plumbing install assist,RV plumber,LABOR-PLUMB,30,150,4500,planned,
+note,,,,,,,,Costs are 2026 estimates pending real quotes. Update as PO data arrives.
