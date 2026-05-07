@@ -1,0 +1,209 @@
+# -*- coding: utf-8 -*-
+"""
+build-master.FCMacro — F550 + Globe Trekker 21' master geometry.
+
+Run inside FreeCAD: Macro -> Macros -> File -> Add -> select this file
+-> Execute. Produces a new document `f550_master` with reference
+sketches and bounding solids for the chassis, cab, tires, subframe,
+and habitat shell.
+
+Origin convention (REQUIREMENTS.md §4 / cad/README.md):
+  Origin = center of rear axle, at ground.
+  +X forward, +Y up, +Z to driver side (LH).
+Units: millimeters.
+
+All dimensions are sourced from `cad/00-vehicle/SPECS.md`. Edit the
+PARAMS dict below to tune the model — every downstream subsystem can
+re-export from this single source.
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+PARAMS = {
+    # Wheelbase and axles
+    "wheelbase": 4470.0,        # mm (176")
+    "track_width": 1930.0,      # mm (76")
+
+    # Tires (41" / 1041 mm OD)
+    "tire_od": 1041.0,
+    "tire_section": 343.0,      # 13.5" wide
+
+    # Frame
+    "frame_top_y": 1016.0,      # mm above ground at neutral ride
+    "frame_width_z": 864.0,     # outside-to-outside
+    "frame_rail_h": 254.0,
+    "frame_rear_overhang": 1524.0,  # mm aft of rear axle
+
+    # Crew cab
+    "cab_back_x": 3200.0,       # X of back-of-cab
+    "cab_front_x": 4830.0,
+    "cab_roof_y": 2180.0,
+    "cab_width_z": 2030.0,
+
+    # Subframe
+    "subframe_h": 150.0,
+
+    # Habitat shell + tail taper
+    "shell_floor_thk": 50.0,
+    "shell_length": 6400.0,     # 21' habitat
+    "tail_taper": 600.0,
+    "shell_width_ext": 2438.0,
+    "shell_height_ext": 2135.0,
+    "cabover_overhang": 760.0,  # over the cab roof (rearward)
+    "cabover_height": 760.0,
+}
+
+
+def make_box(name, length, width, height, placement_xyz, color=None):
+    """Create a Part box with origin at min corner; place by XYZ vector."""
+    box = Part.makeBox(length, height, width)  # FreeCAD: x, y(up), z(side)
+    box.translate(Vector(*placement_xyz))
+    obj = App.ActiveDocument.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+        obj.ViewObject.Transparency = 60
+    return obj
+
+
+def make_cylinder(name, radius, height, axis, base_xyz, color=None):
+    cyl = Part.makeCylinder(radius, height, Vector(*base_xyz), Vector(*axis))
+    obj = App.ActiveDocument.addObject("Part::Feature", name)
+    obj.Shape = cyl
+    if color:
+        obj.ViewObject.ShapeColor = color
+        obj.ViewObject.Transparency = 30
+    return obj
+
+
+def build():
+    p = PARAMS
+    doc = App.newDocument("f550_master")
+
+    # ----- Tires (4) -----
+    tire_r = p["tire_od"] / 2.0
+    tire_w = p["tire_section"]
+    half_track = p["track_width"] / 2.0
+    # axis along Z (side-to-side), origin at hub center, ground = Y=0
+    for label, x, z in [
+        ("tire_RR", 0.0,                   +half_track),
+        ("tire_RL", 0.0,                   -half_track),
+        ("tire_FR", p["wheelbase"],        +half_track),
+        ("tire_FL", p["wheelbase"],        -half_track),
+    ]:
+        # FreeCAD Part.makeCylinder uses base + axis; we want axis along Z
+        make_cylinder(
+            label, tire_r, tire_w,
+            axis=(0, 0, 1),
+            base_xyz=(x, tire_r, z - tire_w / 2.0),
+            color=(0.1, 0.1, 0.1),
+        )
+
+    # ----- Frame rails (two simple boxes) -----
+    rail_len = p["wheelbase"] + p["frame_rear_overhang"] + 600.0  # plus front
+    rail_x_start = -p["frame_rear_overhang"]
+    rail_y = p["frame_top_y"] - p["frame_rail_h"]
+    for sign, label in [(+1, "frame_R"), (-1, "frame_L")]:
+        z_center = sign * (p["frame_width_z"] / 2.0 - 50.0)
+        make_box(
+            label,
+            length=rail_len,
+            width=100.0,
+            height=p["frame_rail_h"],
+            placement_xyz=(rail_x_start, rail_y, z_center - 50.0),
+            color=(0.4, 0.4, 0.45),
+        )
+
+    # ----- Crew cab volume -----
+    cab_len = p["cab_front_x"] - p["cab_back_x"]
+    make_box(
+        "crew_cab",
+        length=cab_len,
+        width=p["cab_width_z"],
+        height=p["cab_roof_y"] - p["frame_top_y"],
+        placement_xyz=(p["cab_back_x"], p["frame_top_y"],
+                       -p["cab_width_z"] / 2.0),
+        color=(0.7, 0.7, 0.75),
+    )
+
+    # ----- Subframe slab (simplified) -----
+    subframe_x_start = p["cab_back_x"] - 6400.0  # placeholder until shell length used
+    # Place subframe directly below shell footprint
+    shell_x_start = p["cab_back_x"] + 150.0  # 6" gap behind cab
+    subframe_x_start = shell_x_start
+    subframe_len = p["shell_length"] + p["tail_taper"]
+    make_box(
+        "subframe",
+        length=subframe_len,
+        width=p["frame_width_z"] + 200.0,
+        height=p["subframe_h"],
+        placement_xyz=(subframe_x_start, p["frame_top_y"],
+                       -(p["frame_width_z"] + 200.0) / 2.0),
+        color=(0.3, 0.3, 0.3),
+    )
+
+    # ----- Habitat shell (21' + tail taper as a single bounding box) -----
+    shell_floor_y = p["frame_top_y"] + p["subframe_h"] + p["shell_floor_thk"]
+    make_box(
+        "shell_main",
+        length=p["shell_length"],
+        width=p["shell_width_ext"],
+        height=p["shell_height_ext"],
+        placement_xyz=(shell_x_start, shell_floor_y,
+                       -p["shell_width_ext"] / 2.0),
+        color=(0.85, 0.85, 0.8),
+    )
+
+    # ----- Tail taper (wedge) -----
+    # Build as a triangular prism via Part.makePolygon + extrude
+    tx0 = shell_x_start
+    tx1 = shell_x_start - p["tail_taper"]  # taper pulls back from rear of shell
+    ty_low = shell_floor_y
+    ty_high = shell_floor_y + p["shell_height_ext"]
+    # Wedge cross-section in X-Y, extruded in Z to shell width
+    pts = [
+        Vector(tx0, ty_low, 0),
+        Vector(tx0, ty_high, 0),
+        Vector(tx1, ty_high, 0),
+        Vector(tx0, ty_low, 0),
+    ]
+    poly = Part.makePolygon(pts)
+    face = Part.Face(poly)
+    wedge = face.extrude(Vector(0, 0, p["shell_width_ext"]))
+    wedge.translate(Vector(0, 0, -p["shell_width_ext"] / 2.0))
+    obj = doc.addObject("Part::Feature", "shell_tail_taper")
+    obj.Shape = wedge
+    obj.ViewObject.ShapeColor = (0.85, 0.85, 0.8)
+    obj.ViewObject.Transparency = 60
+
+    # ----- Cabover nose (over the cab roof) -----
+    cabover_x_start = p["cab_back_x"] - p["cabover_overhang"]
+    cabover_y_floor = p["cab_roof_y"] + 50.0
+    make_box(
+        "cabover",
+        length=p["cabover_overhang"] + (shell_x_start - p["cab_back_x"]),
+        width=p["shell_width_ext"],
+        height=p["cabover_height"],
+        placement_xyz=(cabover_x_start, cabover_y_floor,
+                       -p["shell_width_ext"] / 2.0),
+        color=(0.85, 0.85, 0.8),
+    )
+
+    # ----- Origin marker -----
+    origin = Part.makeSphere(50.0)
+    origin.translate(Vector(0, 0, 0))
+    obj = doc.addObject("Part::Feature", "_ORIGIN_rear_axle_ground")
+    obj.Shape = origin
+    obj.ViewObject.ShapeColor = (1.0, 0.0, 0.0)
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "f550_master built. Save as cad/00-vehicle/f550-chassis-master.FCStd "
+        "and export STEP via File -> Export.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

@@ -1,0 +1,18 @@
+position,bus,device,rating_a,load,wire_id,notes
+1,48V main,Class T fuse,250,Battery to bus,W001,inverter peak protection
+2,48V,DC breaker,200,Multiplus,W002,
+3,48V,DC breaker,100,MPPT,W005,
+4,48V,DC breaker,50,Orion XS 48-24,W007,
+5,48V,DC breaker,30,Mabru mini-split,W016,
+6,48V,DC breaker,40,12V boost in,W031,alternator path
+7,24V sub,ANL,60,Sub-bus to fuse blocks,W008,
+8,24V,ATC,15,Lighting block,W009,
+9,24V,ATC,20,Pump/fan block,W011,
+10,24V,ATC,10,Hydronic blower,W014,
+11,24V,ATC,25,Lift-box actuators,W017,
+12,24V,ATC,25,24-12V converter,W018,
+13,24V,ATC,5,Spare,—,
+14,12V,ATC,40,Legacy fuse block,W019,
+15,12V,ATC,5,Radio,—,
+16,12V,ATC,5,Cab pass-thru sensors,—,
+17,12V,ATC,10,Spare,—,

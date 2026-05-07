@@ -1,0 +1,33 @@
+id,from,to,voltage,amps_continuous,amps_peak,length_ft,gauge_awg,conductor_type,jacket,protection,notes
+W001,Battery+ bus,Class T fuse,48,105,200,2,4/0,tinned Cu,marine flex,Class T 250A,short run; high peak from inverter
+W002,Class T fuse,Multiplus 48V in,48,105,200,4,4/0,tinned Cu,marine flex,DC breaker 200A,
+W003,Battery- bus,SmartShunt,48,105,200,1,4/0,tinned Cu,marine flex,—,SmartShunt is in negative path
+W004,SmartShunt,Chassis bond,48,—,—,2,4/0,tinned Cu,marine flex,—,single-point ground
+W005,Battery+ bus,MPPT 48V in,48,60,80,6,6,tinned Cu,marine flex,DC breaker 100A,
+W006,MPPT solar in,Combiner box,~150 PV,30,40,40,10,tinned Cu,UV PV,15A per string fuse,2s2p ~150V Voc
+W007,Battery+ bus,Orion XS in,48,25,30,4,8,tinned Cu,marine flex,Fuse 50A,
+W008,Orion XS out,24V sub-bus,24,50,60,3,6,tinned Cu,marine flex,ANL 60A,
+W009,24V sub-bus,Lighting fuse block,24,15,—,8,10,tinned Cu,marine flex,ATC 15A,
+W010,Lighting block,LED strips/dome (per branch),24,3-5,—,15,14,tinned Cu,marine flex,5A,3% drop budget
+W011,24V sub-bus,Pump/fan fuse block,24,20,—,8,10,tinned Cu,marine flex,ATC 20A,
+W012,Pump block,Aquajet pump,24,8,12,12,12,tinned Cu,marine flex,15A,
+W013,Pump block,MaxxAir fan x2,24,1.5 each,—,15,14,tinned Cu,marine flex,5A,
+W014,24V sub-bus,Hydronic blower,24,3,5,15,12,tinned Cu,marine flex,10A,Webasto Dual Top
+W015,24V sub-bus,Mini-split control,48,—,—,—,—,—,—,—,Mini-split powered direct from 48V
+W016,Battery+ bus,Mabru 48V mini-split,48,15,25,18,8,tinned Cu,marine flex,30A breaker,
+W017,24V sub-bus,Lift-box actuators,24,10,20,20,10,tinned Cu,marine flex,25A,dual actuators in parallel
+W018,24V sub-bus,24-12V converter,24,20,—,2,10,tinned Cu,marine flex,25A,
+W019,12V sub-bus,Legacy fuse block,12,30,—,3,8,tinned Cu,marine flex,40A,radio etc
+W020,Multiplus AC out,AC load center,120,30,—,3,10/3,marine,—,30A main,with EGC
+W021,AC load center,Galley GFCI x2,120,15,—,12,12/2,marine,—,15A,
+W022,AC load center,Induction cooktop,120,15,18,8,12/2,marine,—,20A,or 240V depending on cooktop
+W023,AC load center,Microwave,120,12,—,8,12/2,marine,—,15A,
+W024,AC load center,Bath GFCI,120,10,—,12,14/2,marine,—,15A,GFCI required
+W025,AC load center,Bedside outlets,120,5,—,15,14/2,marine,—,15A,
+W026,Shore inlet,SmartPlug,120,30,—,3,10/3,marine,—,—,
+W027,SmartPlug,Progressive EMS,120,30,—,2,10/3,marine,—,—,
+W028,EMS,Multiplus AC in,120,30,—,3,10/3,marine,—,—,via galvanic isolator
+W029,F550 alternator,Starter batt,12,200,—,3,4/0,welding cable,abrasion sleeve,—,OEM
+W030,Starter batt,12-48V boost,12,150,200,4,2/0,tinned Cu,marine flex,200A breaker,size for boost input
+W031,12-48V boost out,48V bus,48,30,40,4,8,tinned Cu,marine flex,40A breaker,~60A out at boost
+note,,,,,,,,,,,All gauges per ABYC E-11 with 3% drop on critical and 10% non-critical.

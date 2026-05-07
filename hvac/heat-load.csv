@@ -1,0 +1,22 @@
+surface,area_sf,u_value,delta_t_heat_f,delta_t_cool_f,heat_btu_hr,cool_btu_hr,note
+side_walls,294,0.067,80,35,1576,689,R-15 composite
+end_walls,98,0.067,80,35,525,230,R-15 composite
+roof,147,0.050,80,35,588,257,R-20 composite (less panel shading credit on cool)
+floor,147,0.067,80,35,788,344,R-15 over subframe
+windows,36,0.350,80,35,1008,441,Tern/Seitz dual-pane acrylic
+door,18,0.150,80,35,216,95,composite plug door
+infiltration_heat,,,,,444,,0.3 ACH x 1029 cf x 0.018 x 80
+infiltration_cool,,,,,,230,0.3 ACH x 1029 cf x 0.018 x 35 x avg
+window_solar_gain,,,,,,5400,SHGC 0.4 avg, 150 BTU/sf-hr peak
+roof_solar_residual,,,,,,1000,panels shade most of roof
+internal_gains_credit,,,,,-800,1200,2 people + electronics; negative on heat side
+cabin_subtotal_sensible,,,,,4345,9686,
+latent_people_cooking,,,,,,600,2 ppl x 200 + cooking
+cabin_total,,,,,4345,10286,
+radiant_floor,,,,,2500,,~100 sf at 25 BTU/sf-hr
+towel_rack,,,,,700,,~200W
+tank_bay_loop,,,,,1000,,winter setback
+dhw_average_recovery,,,,,6000,,assumes reservoir-buffered draws
+hydronic_total_required,,,,,14545,,sustained
+hydronic_peak_required,,,,,25000,,DHW + cabin + aux simultaneous
+mini_split_required,,,,,,10700,12000 BTU class with 15% headroom

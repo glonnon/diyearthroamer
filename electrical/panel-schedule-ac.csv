@@ -1,0 +1,15 @@
+position,breaker_a,gfci,load,wire_id,notes
+Main,30,—,From Multiplus AC out,W020,whole-camper main
+1,15,yes,Galley GFCI duplex 1,W021,countertop
+2,15,yes,Galley GFCI duplex 2,W021,by fridge / pantry
+3,20,—,Induction cooktop,W022,dedicated; use 240V if cooktop demands
+4,15,—,Microwave / convection,W023,
+5,15,yes,Bath GFCI,W024,
+6,15,—,Bedside outlets,W025,
+7,15,yes,Exterior GFCI (port + stbd),—,weatherproof
+8,15,—,TV / electronics,—,
+9,15,—,Workstation,—,
+10,15,—,Service bay outlet,—,e-bike charger (2 kW capable on shore)
+11,15,—,Spare,—,
+12,15,—,Spare,—,
+note,,,,,All branches: tinned-marine THHN/THWN; EGC pulled with each branch; no shared neutrals.

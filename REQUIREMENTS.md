@@ -676,16 +676,15 @@ end mountain or gravel bikes**. No flatbed garage box.
 1. **O1 — Flatbed material:** aluminum (preferred for weight) vs steel
    (durability, cost). Decide after subframe spec pulled from Global
    Trekker and weight model run.
-2. **O2 — King vs queen cabover bed:** dictated by exact cabover
-   footprint of the 21' shell over the F550 crew cab roof.
-3. **O3 — Mini-split unit selection:** Mabru 48V vs Velit 24V vs
-   Webasto FCF Platinum; depends on heat-load calc and condenser
-   placement.
-4. **O4 — Hydronic unit:** Webasto Dual Top Evo 8 vs Aqua-Hot 250D
-   vs Timberline; depends on BTU need across cabin + radiant + DHW +
-   towel rack + tank freeze loop.
-5. **O5 — Lift mechanism drive:** dual linear actuators vs hydraulic
-   micro-pack for the bike box.
+2. ~~O2 — King vs queen cabover bed~~ **Closed: Olympic queen
+   (66" × 80"). See ADR-0011 and `cad/20-shell/cabover-fit.md`.**
+3. ~~O3 — Mini-split~~ **Closed: Mabru SCS 12000 (48 V DC).
+   See ADR-0010 and `hvac/heat-load.md`.**
+4. ~~O4 — Hydronic unit~~ **Closed: Webasto Dual Top Evo 8.
+   See ADR-0009 and `hvac/heat-load.md`.**
+5. ~~O5 — Lift mechanism drive~~ **Closed: dual electric linear
+   actuators (Linak LA36 / Progressive Auto PA-04 class). See
+   ADR-0012 and `cad/30-exterior/liftbox-kinematics.md`.**
 6. **O6 — Roof solar layout / tilt:** flat vs tilt brackets to hit
    1,000–1,300 W on 21' roof while preserving walking lanes.
 7. ~~O7 — CAD tooling~~ **Closed: Stack A (FreeCAD + KiCad + Blender +
