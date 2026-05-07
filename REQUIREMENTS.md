@@ -19,11 +19,31 @@ fabricator and outfitter to execute.
 - **Budget envelope target:** to be set; track BOM cost per subsystem.
 - **Curb weight ceiling:** stay under F550 GVWR (19,500 lb) with 20%
   payload reserve. Track running CG.
+- **Weight distribution rule:** **bias mass to the forward half of the
+  camper / flatbed.** Heavy items (battery bank, fresh water, fridge,
+  inverter, tools) live ahead of the rear axle whenever physically
+  possible. The rear half is reserved for lighter living volume,
+  garage, and bikes. Goal: keep front axle within rated load and
+  prevent rear-heavy handling on the F550 (long rear overhang +
+  flatbed amplifies rear-bias issues). Every component in the §4
+  weight model is tagged with its longitudinal station (X-coord from
+  rear axle) so per-axle loads are computed continuously.
 
-## 2. Base Vehicle — Ford F550
+## 2. Base Vehicle — Ford F550 Flatbed
 
-- **Chassis:** Ford F550 4x4, regular or crew cab (decide; affects shell
-  length and pass-through). Diesel (6.7L Power Stroke).
+- **Chassis:** Ford F550 4x4 **flatbed (cab & chassis)**, regular or
+  crew cab (decide; affects bed length and pass-through). Diesel
+  (6.7L Power Stroke).
+- **Flatbed:** custom aluminum flatbed (treadplate or smooth) sized to
+  the chosen Globe Trekker shell length plus optional rear garage box
+  (see §20). Bed integrates:
+  - Subframe interface (3-point / torsion-free, see §3).
+  - Side toolboxes / utility lockers along underbed rails.
+  - Mud flaps, marker lights, license plate relocate.
+  - Trailer wiring + 7-pin to rear.
+  - Tie-down rails (8020 or aluminum extrusion) front and rear of
+    shell footprint for cargo and accessory mounting.
+  - Material/weight target: aluminum to keep tare low; budgeted in §4.
 - **Tires:** 41" (e.g., 41x13.5R17 or 395/85R20). Verify load rating ≥
   4,400 lb/tire at vehicle weight.
 - **Wheels:** 17" or 20" forged, hub-centric, correct offset for clearance.
@@ -135,21 +155,45 @@ fabricator and outfitter to execute.
 
 ## 5. Electrical System
 
-- **Architecture:** 12V DC house bus, 120V AC inverter sub-panel, 48V
-  optional for AC + induction (decide based on load study).
-- **House batteries:**
-  - LiFePO4, 600–1,000 Ah @ 12V (or 200–400 Ah @ 24/48V).
-  - Heated cells (self-heating BMS) for cold-weather charging.
-  - Battery box: vented, insulated, shock-mounted, accessible.
-- **Inverter/charger:** Victron MultiPlus-II 12/3000 (or 48/5000 if 48V).
-  Pure sine, transfer switch, power assist.
+- **Architecture (preferred):** **48V DC house bus** with 12V DC
+  sub-bus (via 48→12V converter, e.g., Victron Orion XS or
+  Orion-Tr 48/12-30A) for legacy loads (lights, fans, pumps, fridge),
+  and 120/240V AC via 48V inverter for induction cooktop, microwave,
+  AC, and shore-side appliances. 48V cuts conductor size, improves
+  inverter efficiency, and pairs naturally with high solar wattages
+  and induction cooking.
+- **House batteries (preferred):** **Epoch 48V LiFePO4 server-rack
+  / wall-mount modules.**
+  - Target capacity: **15–20 kWh usable** (e.g., 3–4× Epoch 48V
+    100Ah modules ≈ 15.36–20.48 kWh).
+  - Self-heating BMS (Epoch heated variant) for sub-freezing charging.
+  - CAN/RS-485 comms to Victron Cerbo GX (closed-loop with inverter
+    and MPPTs).
+  - Mounted in a **vented, insulated, shock-isolated battery bay
+    located in the front half of the camper / flatbed** (see weight
+    distribution rule in §1) — accessible for service from an
+    exterior hatch.
+  - Battery bay must include: lockable disconnect, Class-T main fuse,
+    bus bars, temp probes, pre-charge resistor for inverter, drip
+    pan, and a fire-rated liner.
+- **Fallback architecture:** 12V house bus w/ 600–1,000 Ah LiFePO4
+  if 48V Epoch path is value-engineered out (track in §21 decisions).
+- **Inverter/charger:** **Victron MultiPlus-II 48/5000** (preferred,
+  matches 48V Epoch bank) or Quattro 48/5000 if dual AC inputs (shore
+  + future generator) wanted. Pure sine, transfer switch, power assist,
+  parallel-capable for future expansion.
 - **Solar:**
   - 800–1,200 W rooftop monocrystalline (rigid panels).
   - Mounting: bonded standoffs (3M VHB + sika), no roof penetrations
     where possible.
-  - Controllers: Victron MPPT, sized per array (e.g., 100/50 or 150/70).
-- **Alternator charging:** DC-DC (Victron Orion-Tr Smart 12/12-30 ×2 or
-  Wakespeed regulator + high-output alternator for ≥120A house charging).
+  - Controllers: Victron SmartSolar MPPT sized for 48V bank (e.g.,
+    250/60 or 250/100 depending on array Voc/Isc).
+- **Alternator charging:** high-output 12V alternator (Nations, Mechman,
+  or dual-alternator) feeding a **48V DC-DC** path — either
+  Wakespeed WS500 + alternator + 12→48V converter chain, or a
+  purpose-built 12→48V charger (e.g., Victron Orion XS 12/48 series
+  when capacity sufficient, otherwise multiple in parallel). Target
+  ≥3 kW (≈60A @ 48V) of charging while driving.
 - **Shore power:** 30A inlet (Smartplug), surge protector, EMS
   (Progressive Industries), galvanic isolator.
 - **Distribution:**
@@ -191,12 +235,38 @@ fabricator and outfitter to execute.
 
 ## 7. HVAC
 
-- **Heating:**
-  - Primary: diesel air heater (Webasto Air Top 2000 STC or Autoterm
-    Air 2D), tapped from main fuel tank or dedicated 2.5 gal day tank.
-  - Ducted to: living, bath, bed, wet bay (freeze protection).
-  - Combi unit option: Truma Combi D6 (heat + DHW one box) — strongly
-    consider for space and BTU efficiency.
+- **Heating (preferred — hydronic):** integrated **diesel hydronic
+  system** (Webasto Dual Top Evo 6/8, Espar/Eberspächer Hydronic S3
+  D5E, or Timberline / Aqua-Hot 250D) providing in one loop:
+  1. **Cabin furnace:** hydronic-to-air fan-coil heat exchangers
+     ("hydronic furnaces") in living, bedroom, and bath, ducted via
+     short runs; thermostat per zone.
+  2. **Domestic hot water (DHW):** on-demand or small-tank (≈ 4 gal)
+     hot water tied to galley, bath, exterior shower; mixing valve
+     for scald prevention; recirculation loop optional.
+  3. **Radiant floor heat:** PEX-Al-PEX tubing in the floor under
+     living, galley, and bath, in aluminum heat-transfer plates
+     above floor insulation, fed from the hydronic loop via a small
+     manifold w/ zone valves and a thermostatic mixing valve
+     (target floor surface temp 75–82 °F).
+  4. **Heated towel rack:** hydronic towel warmer in the bathroom
+     plumbed off the radiant loop (or a dedicated low-watt 12V/120V
+     electric rail if 48V conversion losses dominate — decide in §21).
+  5. **Engine pre-heat (optional):** loop tap to engine block for
+     cold-start assist when plugged into shore.
+  6. **Tank / wet-bay freeze protection:** small bypass loop runs warm
+     fluid through wet bay in winter setback mode.
+- **Fuel:** diesel from main tank (with anti-siphon + protected
+  pickup) or a dedicated day tank in the service bay.
+- **Backup / shoulder season:** 120V AC element in the hydronic
+  reservoir for shore-power-only DHW + light radiant without firing
+  the burner.
+- **Air-only fallback:** standalone diesel air heater (Webasto Air Top
+  2000 STC or Autoterm Air 2D) retained as a redundant cabin heat
+  source if hydronic system is value-engineered out — track in §21.
+- **Controls:** single touchscreen thermostat (Truma CP Plus, RV-C, or
+  custom on Cerbo GX) with per-zone setpoints, schedule, and
+  vacation/freeze modes; remote control via app over Starlink/cell.
 - **Cooling:**
   - Rooftop: Nomadic Cooling 24V or Rigid Marine RV3000 12V (low-profile,
     runs on battery).
@@ -231,8 +301,9 @@ fabricator and outfitter to execute.
 - **Filtration:**
   - Inlet: sediment 5 µm.
   - Under-galley: carbon block + UV (Acuva) for potable.
-- **DHW:** Truma Combi D6 (preferred) or Isotemp 6gal (engine + 120V).
-  On-demand options (PrecisionTemp RV-550) if propane allowed.
+- **DHW:** sourced from the hydronic system in §7 (preferred). Tank
+  or on-demand fallback options: Isotemp 6 gal (engine + 120V) or
+  PrecisionTemp RV-550 if hydronic value-engineered out.
 - **Distribution:** PEX-A with expansion fittings, color-coded (red/blue),
   manifold w/ shutoffs per fixture, freeze drain at low points.
 - **Fixtures:**
@@ -307,8 +378,11 @@ fabricator and outfitter to execute.
 - **Vanity:** drawers + open towel bar.
 - **Mirror:** medicine cabinet w/ LED.
 - **Ventilation:** dedicated exhaust fan, humidity-triggered.
-- **Floor:** non-slip vinyl or rubber, fully coved up walls 4".
-- **Heating:** ducted from main heater + small toe-kick vent.
+- **Floor:** non-slip vinyl or rubber, fully coved up walls 4"; **heated
+  via hydronic radiant loop (§7)** with its own zone valve.
+- **Heating:** hydronic fan-coil + radiant floor; **heated towel rack**
+  (hydronic preferred, electric fallback) on the wall opposite the
+  shower.
 
 ## 12. Living Area
 
@@ -394,8 +468,9 @@ fabricator and outfitter to execute.
 
 ## 18. Materials & Finishes
 
-- **Floor:** luxury vinyl plank (waterproof) over thin underlayment;
-  full perimeter sealed.
+- **Floor:** luxury vinyl plank (waterproof) rated for radiant heat,
+  laid over the hydronic radiant assembly (heat-transfer plates +
+  PEX-Al-PEX in grooved subfloor) per §7; full perimeter sealed.
 - **Walls:** painted FRP or upholstered panels at impact zones.
 - **Ceiling:** acoustic fabric or FRP, integrated lighting tracks.
 - **Cabinetry:** **hybrid aluminum + plywood construction** (see §22).
@@ -459,14 +534,29 @@ A primary design driver, not an afterthought. The vehicle must carry
 **2–3 high-end mountain or gravel bikes** safely off-road, secure from
 theft, and protected from weather and dust when desired.
 
-- **Two-mode capability — the build supports both:**
+- **Three-mode capability — the build supports all three:**
   1. **Internal "garage" mode:** bikes carried *inside* the rear of the
      habitat, behind/under the bed platform, in a sealed dust-/weather-
      protected compartment with a large rear hatch.
-  2. **External motorized rack mode:** swing-out / lift-assist rack
+  2. **Rear flatbed garage box (30" deep):** a separate 30" deep
+     aluminum garage box mounted on the **flatbed aft of the camper
+     shell**, full-width, with a top-hinged or barn-door rear hatch.
+     This is its own structure (not part of the Globe Trekker shell)
+     and adds bike/gear capacity without giving up living space.
+     Counts against rear axle load — see weight rule in §1; mitigated
+     by keeping batteries/water/galley forward.
+     - Construction: aluminum frame (1.5" sq tube) clad in 0.090"
+       sheet; insulated lid; gas struts; T-handle compression locks.
+     - Floor: rubber/Line-X over aluminum diamond plate; drain ports.
+     - Tie-downs: aluminum L-track on floor and walls for bike trays
+       and gear straps.
+     - Lighting + 12V/USB outlets.
+     - Door interlock w/ rear motorized rack if installed (option 3).
+  3. **External motorized rack mode:** swing-out / lift-assist rack
      similar to **Aluminess motorized bike rack** or **1UP USA Equip-D
-     w/ StableLoad lift**, mounted to the rear bumper / hitch, capable
-     of carrying 2–3 bikes when garage is otherwise loaded.
+     w/ StableLoad lift**, mounted to the rear bumper / hitch (or to
+     the rear face of the flatbed garage box), capable of carrying
+     2–3 bikes when interior garage is otherwise loaded.
 - **Internal garage requirements:**
   - **Capacity:** 2–3 bikes, wheel base up to 1,250 mm, tire up to
     29x2.6 (MTB) or 700x50 (gravel), bar width up to 800 mm.
@@ -529,6 +619,13 @@ theft, and protected from weather and dust when desired.
 8. Subframe vendor/design: build vs buy.
 9. Solar capacity target (W) and panel count.
 10. Convertible dinette vs fixed bed (dictated by 19/21 choice).
+11. House bus voltage: 48V Epoch (current baseline) vs 12V fallback.
+12. Heating: integrated hydronic (Webasto Dual Top / Aqua-Hot) vs
+    standalone diesel air heater + separate DHW.
+13. Heated towel rack drive: hydronic vs 12V/120V electric.
+14. Rear flatbed garage box: include 30" garage aft of shell — yes/no
+    and exact depth (24"–36").
+15. Flatbed material: aluminum (preferred) vs steel.
 
 ## 22. Build Phases (Suggested)
 
