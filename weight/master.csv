@@ -5,11 +5,13 @@ id,subsystem,item,mass_lb,station_x_in,note
 ,electrical,Epoch 48V 100Ah module,128,48,4 modules x 128 lb (estimate); FRONT bay
 ,electrical,Victron MultiPlus-II 48/5000,66,48,front systems bay
 ,electrical,Victron MPPT + DC-DC + monitoring,30,48,
-,solar,Rigid panels + mounts (1.2 kW),140,108,roof; CG height noted in CAD model
+,solar,4x 320W rigid panels + bonded standoffs,150,108,ADR-0014; flat 2x2; ~38 lb each panel
 ,hvac,Diesel hydronic heater + reservoir,90,60,
 ,hvac,Mini-split (head + condenser),110,90,head inside; condenser in vented locker
-,plumbing,Fresh water tank empty (poly, 120 gal),120,60,FORWARD; mount low
-,plumbing,Fresh water full,1000,60,120 gal x 8.34 lb/gal
+,plumbing,Fresh tank A empty (poly, 60 gal port),60,71,ADR-0015; mount low + forward
+,plumbing,Fresh tank B empty (poly, 60 gal curb),60,71,ADR-0015
+,plumbing,Fresh tank A full,500,71,60 gal x 8.34
+,plumbing,Fresh tank B full,500,71,60 gal x 8.34
 ,plumbing,Grey tank empty,40,108,
 ,plumbing,Grey tank full,374,108,40 gal x 8.34
 ,plumbing,Black tank empty,40,108,

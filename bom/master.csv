@@ -12,12 +12,16 @@ id,subsystem,part,vendor,part_number,qty,unit_cost_usd,extended_cost_usd,status,
 ,electrical,Victron SmartShunt 500A,Victron,SHU050150050,1,,,planned,
 ,electrical,Victron MPPT 250/100,Victron,SCC125110510,1,,,planned,sized to array
 ,electrical,Victron Orion XS 48/24,Victron,,1,,,planned,sub-bus converter
-,solar,Rigid mono panels (~330W),,,4,,,planned,1.0–1.3 kW total (ADR pending)
+,solar,320W mono rigid panel,,,4,,,planned,ADR-0014 — 1280W flat 2x2
+,solar,Bonded panel standoffs + Sika 252,,,1,,,planned,no roof penetrations
+,solar,Scanstrut roof gland,Scanstrut,DS-MULTI-01,1,,,planned,single PV gland
+,solar,MC4 inline 15A fuse,,,4,,,planned,one per string side
+,exterior,Aluminum flatbed (6061-T6 + 5052-H32),,,1,,,planned,ADR-0013
 ,hvac,Webasto Dual Top Evo 8 (diesel hydronic),Webasto,,1,,,planned,ADR-0009
 ,hvac,Mabru SCS 12000 mini-split (48V DC),Mabru,SCS-12000,1,,,planned,ADR-0010
 ,hvac,Standalone diesel air heater (backup),Autoterm,Air 2D,1,,,optional,redundancy
 ,hvac,MaxxAir Deluxe fan,MaxxAir,00-07000K,2,,,planned,
-,plumbing,Fresh water tank 60 gal x2,,,2,,,planned,100–120 gal total
+,plumbing,Fresh water tank 60 gal,,,2,,,planned,ADR-0015 — 2x60 split
 ,plumbing,Grey tank 35 gal,,,1,,,planned,30–40 gal
 ,plumbing,Black tank 35 gal,,,1,,,planned,30–40 gal
 ,plumbing,Variable-speed water pump,Remco,Aquajet RV,1,,,planned,

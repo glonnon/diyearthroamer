@@ -1,0 +1,24 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "00000000-0000-0000-0000-000000000001")
+	(paper "A2")
+	(title_block
+		(title "DIY Earthroamer — Root Schematic")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "Hierarchical root: see sheets-plan.md for sub-sheets")
+		(comment 2 "ABYC E-11 conventions, marine-grade harness")
+		(comment 3 "Bus voltage: 48V primary, 24V sub, 12V legacy")
+		(comment 4 "Decision basis: ADR-0004; one-line in electrical/oneline.md")
+	)
+	(lib_symbols)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

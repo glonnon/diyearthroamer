@@ -1,0 +1,277 @@
+# -*- coding: utf-8 -*-
+"""
+build-galley.FCMacro — parametric galley assembly for FreeCAD.
+
+Run inside FreeCAD: Macro -> Macros -> File -> Add -> select this file
+-> Execute. Creates a new document `galley` containing the galley
+modules (pantry, drawer tower, cooktop, sink) along the curb side of
+the 21' shell. Modules are simplified solids — boxes for the
+aluminum-angle skeleton silhouette and panels for the plywood faces.
+Use this as the starting parametric assembly; refine each module by
+opening the saved doc and adding mounting holes, drawer fronts, etc.
+
+Origin convention (cad/README.md): origin at center of rear axle, at
+ground. +X forward, +Y up, +Z to driver side (LH).
+Galley sits on the curb (right) side, so all Z values are negative.
+
+Units: millimeters.
+
+Reference: cad/70-interior-cabinetry/galley/SPECS.md
+"""
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+
+# ---- Parameters ---------------------------------------------------- #
+
+# Galley placement (relative to vehicle origin)
+GALLEY_X_FRONT = 4500.0   # X of front edge of pantry (toward cab)
+GALLEY_FLOOR_Y = 1216.0   # interior floor Y (per cad/00-vehicle/SPECS.md)
+GALLEY_Z_OUTBOARD = -1117.5  # outboard wall Z (interior, curb side, half of 88" + skin)
+
+# Galley dimensions
+COUNTER_DEPTH = 610.0     # 24"
+COUNTER_HEIGHT = 914.0    # 36" finished
+TOE_KICK_HEIGHT = 100.0
+TOE_KICK_RECESS = 75.0
+UPPER_GAP = 460.0         # over counter
+UPPER_HEIGHT = 460.0
+UPPER_DEPTH = 305.0
+
+# Material thicknesses
+PLY_THK = 18.0
+ANGLE_THK = 38.0          # 1.5" angle visualized as 38mm bar
+
+# Modules (curb side, front-to-rear). order: front of vehicle to rear.
+MODULES = [
+    {"name": "pantry_tower",   "width": 460.0, "type": "tower"},
+    {"name": "drawer_tower",   "width": 610.0, "type": "base"},
+    {"name": "cooktop_module", "width": 610.0, "type": "base"},
+    {"name": "sink_module",    "width": 510.0, "type": "base"},
+]
+
+COLORS = {
+    "ply": (0.85, 0.78, 0.55),
+    "angle": (0.7, 0.7, 0.75),
+    "counter": (0.95, 0.95, 0.92),
+    "hood": (0.4, 0.4, 0.45),
+    "appliance": (0.2, 0.2, 0.22),
+}
+
+
+def add_box(doc, name, length, width, height, xyz, color=None,
+            transparency=0):
+    """Create a box at (x, y, z) with size (length, height, width).
+
+    FreeCAD axis: x is X, y is Y(up), z is Z(side). makeBox takes
+    (length-x, height-y, width-z).
+    """
+    box = Part.makeBox(length, height, width)
+    box.translate(Vector(*xyz))
+    obj = doc.addObject("Part::Feature", name)
+    obj.Shape = box
+    if color:
+        obj.ViewObject.ShapeColor = color
+    if transparency:
+        obj.ViewObject.Transparency = transparency
+    return obj
+
+
+def build_base_module(doc, name, x_front, width):
+    """Build a counter-height base cabinet module."""
+    z_outboard = GALLEY_Z_OUTBOARD
+    z_inboard = z_outboard + COUNTER_DEPTH
+    y_floor = GALLEY_FLOOR_Y + TOE_KICK_HEIGHT
+    height = COUNTER_HEIGHT - TOE_KICK_HEIGHT
+
+    # Toe kick (small recessed strip)
+    add_box(doc, f"{name}_toekick",
+            length=width,
+            width=COUNTER_DEPTH - TOE_KICK_RECESS,
+            height=TOE_KICK_HEIGHT,
+            xyz=(x_front - width, GALLEY_FLOOR_Y, z_outboard),
+            color=COLORS["ply"], transparency=10)
+
+    # Side panels (left/right verticals, 18mm ply)
+    for dx in (0.0, width - PLY_THK):
+        add_box(doc, f"{name}_side_{int(dx)}",
+                length=PLY_THK,
+                width=COUNTER_DEPTH,
+                height=height,
+                xyz=(x_front - width + dx, y_floor, z_outboard),
+                color=COLORS["ply"], transparency=20)
+
+    # Back panel
+    add_box(doc, f"{name}_back",
+            length=width,
+            width=PLY_THK,
+            height=height,
+            xyz=(x_front - width, y_floor, z_outboard),
+            color=COLORS["ply"], transparency=20)
+
+    # Bottom panel
+    add_box(doc, f"{name}_bottom",
+            length=width,
+            width=COUNTER_DEPTH - PLY_THK,
+            height=PLY_THK,
+            xyz=(x_front - width, y_floor, z_outboard + PLY_THK),
+            color=COLORS["ply"], transparency=20)
+
+    # Aluminum angle frame (4 vertical posts, simplified bars)
+    for dz in (z_outboard + 5, z_inboard - ANGLE_THK - 5):
+        for dx in (5.0, width - ANGLE_THK - 5):
+            add_box(doc, f"{name}_post_{int(dx)}_{int(dz - z_outboard)}",
+                    length=ANGLE_THK,
+                    width=ANGLE_THK,
+                    height=height,
+                    xyz=(x_front - width + dx, y_floor, dz),
+                    color=COLORS["angle"], transparency=10)
+
+
+def build_tower_module(doc, name, x_front, width):
+    """Build a full-height tower (pantry)."""
+    z_outboard = GALLEY_Z_OUTBOARD
+    y_floor = GALLEY_FLOOR_Y + TOE_KICK_HEIGHT
+    height = COUNTER_HEIGHT + UPPER_GAP + UPPER_HEIGHT - TOE_KICK_HEIGHT
+
+    # Toe kick
+    add_box(doc, f"{name}_toekick",
+            length=width,
+            width=COUNTER_DEPTH - TOE_KICK_RECESS,
+            height=TOE_KICK_HEIGHT,
+            xyz=(x_front - width, GALLEY_FLOOR_Y, z_outboard),
+            color=COLORS["ply"], transparency=10)
+
+    for dx in (0.0, width - PLY_THK):
+        add_box(doc, f"{name}_side_{int(dx)}",
+                length=PLY_THK,
+                width=COUNTER_DEPTH,
+                height=height,
+                xyz=(x_front - width + dx, y_floor, z_outboard),
+                color=COLORS["ply"], transparency=20)
+
+    add_box(doc, f"{name}_back",
+            length=width,
+            width=PLY_THK,
+            height=height,
+            xyz=(x_front - width, y_floor, z_outboard),
+            color=COLORS["ply"], transparency=20)
+
+    # Two interior shelves (rough)
+    for dy in (height * 0.33, height * 0.66):
+        add_box(doc, f"{name}_shelf_{int(dy)}",
+                length=width - 2 * PLY_THK,
+                width=COUNTER_DEPTH - PLY_THK,
+                height=PLY_THK,
+                xyz=(x_front - width + PLY_THK, y_floor + dy,
+                     z_outboard + PLY_THK),
+                color=COLORS["ply"], transparency=20)
+
+
+def add_counter(doc, x_front, x_rear):
+    """Add the counter top spanning all base modules."""
+    z_outboard = GALLEY_Z_OUTBOARD
+    y_top = GALLEY_FLOOR_Y + COUNTER_HEIGHT
+    length = x_front - x_rear
+    add_box(doc, "counter_top",
+            length=length,
+            width=COUNTER_DEPTH,
+            height=20.0,  # 3/4" counter
+            xyz=(x_rear, y_top - 20.0, z_outboard),
+            color=COLORS["counter"])
+
+    # Backsplash
+    add_box(doc, "backsplash",
+            length=length,
+            width=10.0,
+            height=150.0,
+            xyz=(x_rear, y_top, z_outboard),
+            color=COLORS["counter"])
+
+
+def add_upper_cabinets(doc, x_front, x_rear):
+    """Upper cabinet run above the counter (skip cooktop area)."""
+    z_outboard = GALLEY_Z_OUTBOARD
+    y_bottom = GALLEY_FLOOR_Y + COUNTER_HEIGHT + UPPER_GAP
+
+    # We'll emit two upper-cabinet runs separated by the cooktop range hood.
+    # For simplicity, single run end to end:
+    add_box(doc, "upper_cabinets",
+            length=x_front - x_rear,
+            width=UPPER_DEPTH,
+            height=UPPER_HEIGHT,
+            xyz=(x_rear, y_bottom, z_outboard),
+            color=COLORS["ply"], transparency=30)
+
+
+def add_appliances(doc, modules_x):
+    """Drop placeholders for cooktop, sink, range hood, faucet."""
+    # cooktop
+    cx = modules_x.get("cooktop_module")
+    if cx is not None:
+        x_front, width = cx
+        add_box(doc, "cooktop_appliance",
+                length=510.0,
+                width=540.0,
+                height=10.0,
+                xyz=(x_front - width + 50, GALLEY_FLOOR_Y + COUNTER_HEIGHT,
+                     GALLEY_Z_OUTBOARD + 35),
+                color=COLORS["appliance"])
+        # range hood
+        add_box(doc, "range_hood",
+                length=width,
+                width=300.0,
+                height=120.0,
+                xyz=(x_front - width,
+                     GALLEY_FLOOR_Y + COUNTER_HEIGHT + UPPER_GAP +
+                     UPPER_HEIGHT - 120.0,
+                     GALLEY_Z_OUTBOARD + 30),
+                color=COLORS["hood"])
+    # sink
+    sx = modules_x.get("sink_module")
+    if sx is not None:
+        x_front, width = sx
+        add_box(doc, "sink_appliance",
+                length=410.0,
+                width=350.0,
+                height=180.0,
+                xyz=(x_front - width + 50,
+                     GALLEY_FLOOR_Y + COUNTER_HEIGHT - 200.0,
+                     GALLEY_Z_OUTBOARD + 80),
+                color=COLORS["appliance"])
+
+
+def build():
+    doc = App.newDocument("galley")
+
+    x_cursor = GALLEY_X_FRONT
+    modules_x = {}
+    for m in MODULES:
+        name = m["name"]
+        width = m["width"]
+        if m["type"] == "tower":
+            build_tower_module(doc, name, x_cursor, width)
+        else:
+            build_base_module(doc, name, x_cursor, width)
+        modules_x[name] = (x_cursor, width)
+        x_cursor -= width
+
+    # Counter spans all base modules (skip the front pantry which is
+    # full-height; counter starts after pantry).
+    pantry_x_front, pantry_w = modules_x["pantry_tower"]
+    counter_front = pantry_x_front - pantry_w
+    counter_rear = x_cursor
+    add_counter(doc, counter_front, counter_rear)
+    add_upper_cabinets(doc, counter_front, counter_rear)
+    add_appliances(doc, modules_x)
+
+    doc.recompute()
+    App.Console.PrintMessage(
+        "galley assembly built. Save as cad/70-interior-cabinetry/"
+        "galley/galley-master.FCStd and export STEP.\n"
+    )
+
+
+if __name__ == "__main__":
+    build()

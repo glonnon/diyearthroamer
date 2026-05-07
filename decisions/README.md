@@ -19,8 +19,12 @@ renumbered. Use `0000-template.md` to start a new ADR.
 | [0010](0010-mini-split-mabru-scs-12000.md) | Mini-split — Mabru SCS 12000 (48 V DC) | Accepted |
 | [0011](0011-cabover-mattress-olympic-queen.md) | Cabover mattress — Olympic queen | Accepted |
 | [0012](0012-liftbox-drive-dual-electric-actuators.md) | Lift-box drive — Dual electric linear actuators | Accepted |
+| [0013](0013-flatbed-material-aluminum.md) | Flatbed material — Aluminum (6061-T6 + 5052-H32) | Accepted |
+| [0014](0014-solar-flat-2x2-1280w.md) | Solar — 4× 320W flat 2×2 array, no tilt | Accepted |
+| [0015](0015-fresh-tank-split-2x60.md) | Fresh tank — 2× 60 gal split | Accepted |
 
-## Open items still needing ADRs (track in REQUIREMENTS.md §21)
+## Open items
 
-- O1 — Flatbed material (aluminum vs steel)
-- O6 — Solar layout / tilt
+All headline architectural decisions are now closed. Remaining picks
+are vendor / model selection and fab-shop choices, which will get
+ADRs as they're locked in.

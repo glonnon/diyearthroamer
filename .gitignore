@@ -26,6 +26,9 @@ desktop.ini
 fp-info-cache
 sym-lib-table.bak
 
+# KiCad generated exports (regenerate any time)
+electrical/kicad/exports/
+
 # Build / temp
 /tmp/
 /build/

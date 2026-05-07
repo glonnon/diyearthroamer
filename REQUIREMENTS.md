@@ -673,9 +673,10 @@ end mountain or gravel bikes**. No flatbed garage box.
 
 ### Still open
 
-1. **O1 — Flatbed material:** aluminum (preferred for weight) vs steel
-   (durability, cost). Decide after subframe spec pulled from Global
-   Trekker and weight model run.
+All headline architectural decisions O1–O8 are now closed:
+
+1. ~~O1 — Flatbed material~~ **Closed: aluminum (6061-T6 + 5052-H32).
+   See ADR-0013 and `cad/10-subframe/flatbed-material.md`.**
 2. ~~O2 — King vs queen cabover bed~~ **Closed: Olympic queen
    (66" × 80"). See ADR-0011 and `cad/20-shell/cabover-fit.md`.**
 3. ~~O3 — Mini-split~~ **Closed: Mabru SCS 12000 (48 V DC).
@@ -685,10 +686,16 @@ end mountain or gravel bikes**. No flatbed garage box.
 5. ~~O5 — Lift mechanism drive~~ **Closed: dual electric linear
    actuators (Linak LA36 / Progressive Auto PA-04 class). See
    ADR-0012 and `cad/30-exterior/liftbox-kinematics.md`.**
-6. **O6 — Roof solar layout / tilt:** flat vs tilt brackets to hit
-   1,000–1,300 W on 21' roof while preserving walking lanes.
+6. ~~O6 — Roof solar layout / tilt~~ **Closed: 4× 320W flat 2×2,
+   no tilt. See ADR-0014 and `cad/30-exterior/solar-layout.md`.**
 7. ~~O7 — CAD tooling~~ **Closed: Stack A (FreeCAD + KiCad + Blender +
    Inkscape + draw.io). See §24 and `/decisions/0008-cad-stack.md`.**
+8. ~~O8 — Fresh water tank split~~ **Closed: 2× 60 gal in parallel.
+   See ADR-0015 and `plumbing/tank-layout.md`.**
+
+Remaining picks are vendor / fab-shop selections (final mattress
+maker, flatbed vendor or fab shop, exact Webasto sub-options, etc.).
+Those land as ADRs when chosen.
 
 ## 22. Build Phases (Suggested)
 
