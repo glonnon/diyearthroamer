@@ -4,16 +4,18 @@ A custom 4-season expedition vehicle built on a Ford F550 crew-cab
 flatbed with a 21' Global Trekker composite shell. Source of truth for
 specs, CAD, electrical, plumbing, HVAC, BOM, and build log.
 
-- **Requirements:** [`REQUIREMENTS.md`](REQUIREMENTS.md) — read first.
-- **Decisions log (ADRs):** [`decisions/`](decisions/)
-- **CAD:** [`cad/`](cad/) — FreeCAD natives + STEP exports per subsystem.
-- **Electrical:** [`electrical/`](electrical/) — KiCad schematics, load study.
+- **How to build & display the models:** [`HOWTO.md`](HOWTO.md) — start here if you've just cloned the repo.
+- **Requirements:** [`REQUIREMENTS.md`](REQUIREMENTS.md) — what we're building.
+- **Decisions log (ADRs):** [`decisions/`](decisions/) — why each choice was made.
+- **CAD:** [`cad/`](cad/) — FreeCAD macros + STEP exports per subsystem.
+- **Electrical:** [`electrical/`](electrical/) — KiCad schematics, load study, wire list.
 - **Plumbing:** [`plumbing/`](plumbing/) — P&ID, fixture/tank schedules.
-- **HVAC:** [`hvac/`](hvac/) — heat-load calc, hydronic loop diagram, ducting.
-- **BOM:** [`bom/master.csv`](bom/master.csv)
-- **Weight & CG:** [`weight/master.csv`](weight/master.csv)
-- **Build log:** [`build-log/`](build-log/)
-- **Vendor docs:** [`vendor-docs/`](vendor-docs/) (datasheets, install manuals)
+- **HVAC:** [`hvac/`](hvac/) — heat-load calc, hydronic loop diagram.
+- **Diagrams:** [`diagrams/`](diagrams/) — Mermaid one-line, P&ID, hydronic, schematic hierarchy.
+- **BOM:** [`bom/master.csv`](bom/master.csv) + [`bom/cost-summary.md`](bom/cost-summary.md).
+- **Weight & CG:** [`weight/master.csv`](weight/master.csv) + [`weight/axle-analysis.md`](weight/axle-analysis.md).
+- **Build plan:** [`build-log/phase-plan.md`](build-log/phase-plan.md) — 12-phase project plan.
+- **Vendor docs:** [`vendor-docs/`](vendor-docs/) (datasheets, install manuals) + [`suppliers.md`](vendor-docs/suppliers.md).
 
 ## Tooling (locked — Stack A, all OSS)
 
