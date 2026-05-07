@@ -31,8 +31,11 @@ fabricator and outfitter to execute.
 
 ## 2. Base Vehicle — Ford F550 Flatbed
 
-- **Chassis:** Ford F550 4x4 **flatbed (cab & chassis)**, regular or
-  crew cab (decide; affects bed length and pass-through). Diesel
+- **Chassis:** Ford F550 4x4 **flatbed (cab & chassis)**, **crew cab
+  baseline** (locked) — provides 4 DOT seats and rear-cab pass-through
+  geometry. Super cab or single cab remain on the table only if the
+  cab-to-house pass-through analysis (§3) shows crew cab interferes
+  with the cabover bed; in that case super cab is the fallback. Diesel
   (6.7L Power Stroke).
 - **Flatbed:** custom aluminum flatbed (treadplate or smooth) sized to
   the chosen Globe Trekker shell length plus optional rear garage box
@@ -68,11 +71,13 @@ fabricator and outfitter to execute.
 - **Lighting:** LED headlight upgrade, ditch lights, roof bar, scene
   lighting (sides + rear).
 
-## 3. Habitat Shell — Globe Trekker 19' or 21'
+## 3. Habitat Shell — Global Trekker 21'
 
-- **Decision pending:** 19' vs 21'.
-  - 19': better departure angle, lighter, tighter interior.
-  - 21': permanent bed + dinette possible without conversion.
+- **Length (locked):** **21' habitat shell** with rear-end departure-
+  angle taper, target **total exterior length ≈ 23'** including the
+  tapered tail (the angled aft wall sheds frame to preserve departure
+  angle and gives a small rear cargo wedge). Cabover nose extends over
+  the F550 crew cab roof for the master bed (see §13).
 - **Construction:** composite sandwich panels (XPS/PU core, FRP/GRP skins),
   bonded, frameless. Vendor-supplied.
 - **Insulation:** R-value target ≥ R-15 walls/floor, R-20 roof. Verify
@@ -85,11 +90,14 @@ fabricator and outfitter to execute.
     propane locker (if any), fuel fill for diesel heater, cable glands
   - Floor: tank drains, grey/black/macerator outlets, heater intake/exhaust,
     wiring chases
-- **Subframe / mounting system:**
-  - Three-point or torsion-free pivot mount (e.g., Multidrive, GTV,
-    Earthcruiser-style) to decouple chassis flex from box.
-  - Material: 3" x 5" rectangular tube, A500 Gr B or aluminum (weight calc).
-  - Outriggers for storage boxes and steps.
+- **Subframe / mounting system (locked):** **purchase the Global
+  Trekker OEM subframe** matched to the 21' shell and F550 crew-cab
+  flatbed. Vendor subframe handles three-point / torsion-free pivot
+  mounting and is engineered to the shell. We will:
+  - Confirm vendor subframe dimensions, mount-point spacing, and
+    outrigger options before locking flatbed length.
+  - Add owner-side outriggers / brackets for side toolboxes, steps,
+    and accessory mounts where the OEM frame doesn't already provide.
   - Bonded/bolted interface with shell per vendor spec.
 - **Door:** composite plug door, deadbolt + 3-point latch, screen,
   integrated steps (electric retract).
@@ -155,13 +163,18 @@ fabricator and outfitter to execute.
 
 ## 5. Electrical System
 
-- **Architecture (preferred):** **48V DC house bus** with 12V DC
-  sub-bus (via 48→12V converter, e.g., Victron Orion XS or
-  Orion-Tr 48/12-30A) for legacy loads (lights, fans, pumps, fridge),
-  and 120/240V AC via 48V inverter for induction cooktop, microwave,
-  AC, and shore-side appliances. 48V cuts conductor size, improves
-  inverter efficiency, and pairs naturally with high solar wattages
-  and induction cooking.
+- **Architecture (locked):** **48V DC primary house bus** with a
+  **24V DC sub-bus** (via 48→24V DC-DC converter, e.g., Victron Orion
+  XS 48/24 or equivalent, sized ≥ 50 A continuous) for the bulk of
+  house loads (lighting, fans, pumps, MaxxAirs, fridge if 24V model
+  selected, control gear). A small 24→12V converter feeds any
+  remaining 12V-only accessories (radio, some marine fixtures).
+  120/240V AC is produced by the 48V inverter for induction cooktop,
+  microwave, AC/heat pump, and shore-side appliances. The 48/24V
+  split keeps conductors small on the high-power side while letting
+  most cabin gear run at 24V — a sweet spot of available marine
+  hardware, lower current than 12V, and no need for a giant 48→12V
+  converter on every circuit.
 - **House batteries (preferred):** **Epoch 48V LiFePO4 server-rack
   / wall-mount modules.**
   - Target capacity: **15–20 kWh usable** (e.g., 3–4× Epoch 48V
@@ -183,7 +196,7 @@ fabricator and outfitter to execute.
   + future generator) wanted. Pure sine, transfer switch, power assist,
   parallel-capable for future expansion.
 - **Solar:**
-  - 800–1,200 W rooftop monocrystalline (rigid panels).
+  - **1,000–1,300 W** rooftop monocrystalline (rigid panels).
   - Mounting: bonded standoffs (3M VHB + sika), no roof penetrations
     where possible.
   - Controllers: Victron SmartSolar MPPT sized for 48V bank (e.g.,
@@ -267,12 +280,17 @@ fabricator and outfitter to execute.
 - **Controls:** single touchscreen thermostat (Truma CP Plus, RV-C, or
   custom on Cerbo GX) with per-zone setpoints, schedule, and
   vacation/freeze modes; remote control via app over Starlink/cell.
-- **Cooling:**
-  - Rooftop: Nomadic Cooling 24V or Rigid Marine RV3000 12V (low-profile,
-    runs on battery).
-  - Alternative: marine split (Mabru, Webasto FCF) for quieter, lower
-    profile, but heavier install.
+- **Cooling (preferred — mini-split heat pump):** **12/24/48V DC
+  mini-split heat pump** (Mabru SCS 12000 BTU 48V, Velit 24V mini-split,
+  or marine split such as Webasto FCF Platinum 16,000) — quieter,
+  lower roof profile, dual-mode (cooling + supplemental heat in
+  shoulder seasons), and low DC draw at part-load. Indoor head wall-
+  or ceiling-mounted in living area; outdoor condenser in a vented
+  external locker on the flatbed or in a recessed exterior bay.
   - Sized for ~9,000–13,500 BTU; verify against shell heat-load calc.
+- **Cooling (fallback):** 48V or 24V rooftop unit (Nomadic Cooling 24V,
+  RecPro RPAC-12V, or similar low-profile RV unit) if the mini-split
+  install footprint or condenser placement doesn't pencil out.
 - **Ventilation:**
   - MaxxAir Deluxe fans ×2 (over galley and bed), reversible, rain cover.
   - Cross-flow openable windows.
@@ -406,8 +424,15 @@ fabricator and outfitter to execute.
 
 ## 13. Bed / Sleeping
 
-- **Configuration:** permanent east-west queen (60"x74") in 21'; or
-  north-south + dinette conversion in 19'.
+- **Configuration (locked):** **fixed cabover bed** in the nose of the
+  shell, mounted **over the F550 crew cab roof**, classic Earthroamer-
+  style. Target **king (76"x80") if the cabover footprint allows**,
+  otherwise queen (60"x80"). Permanent — no conversion. Headroom
+  ≥ 28" above mattress at the rear edge, sloping forward as needed.
+  - Pass-through to the cab from the front of the cabover, gasketed
+    and insulated, opens onto the rear bench area of the crew cab.
+  - Bed access: 2-step plus grab handles from the main floor; lower
+    edge ≈ 36–40" off finish floor.
 - **Mattress:** custom latex or hybrid, 8"–10", removable cover, vented
   base (slats or coir mat) to prevent condensation.
 - **Storage under:** garage access from rear hatch + interior lift-top.
@@ -528,35 +553,50 @@ all-ply RV cabinets or the cold/industrial feel of all-aluminum.
 - **Serviceability target:** any drawer slide, door, or panel
   replaceable in < 30 min with hand tools.
 
-## 20. Rear Bike Garage / Bike Carry System
+## 20. Bike Carry — Enclosed Lift-Box
 
-A primary design driver, not an afterthought. The vehicle must carry
-**2–3 high-end mountain or gravel bikes** safely off-road, secure from
-theft, and protected from weather and dust when desired.
+Locked: the bike carry system is an **enclosed, weather-tight,
+exterior bike box** mounted on a **motorized lift mechanism** that
+raises and lowers the box for loading/unloading. Carries **2–3 high-
+end mountain or gravel bikes**. No flatbed garage box.
 
-- **Three-mode capability — the build supports all three:**
-  1. **Internal "garage" mode:** bikes carried *inside* the rear of the
-     habitat, behind/under the bed platform, in a sealed dust-/weather-
-     protected compartment with a large rear hatch.
-  2. **Rear flatbed garage box (30" deep):** a separate 30" deep
-     aluminum garage box mounted on the **flatbed aft of the camper
-     shell**, full-width, with a top-hinged or barn-door rear hatch.
-     This is its own structure (not part of the Globe Trekker shell)
-     and adds bike/gear capacity without giving up living space.
-     Counts against rear axle load — see weight rule in §1; mitigated
-     by keeping batteries/water/galley forward.
-     - Construction: aluminum frame (1.5" sq tube) clad in 0.090"
-       sheet; insulated lid; gas struts; T-handle compression locks.
-     - Floor: rubber/Line-X over aluminum diamond plate; drain ports.
-     - Tie-downs: aluminum L-track on floor and walls for bike trays
-       and gear straps.
-     - Lighting + 12V/USB outlets.
-     - Door interlock w/ rear motorized rack if installed (option 3).
-  3. **External motorized rack mode:** swing-out / lift-assist rack
-     similar to **Aluminess motorized bike rack** or **1UP USA Equip-D
-     w/ StableLoad lift**, mounted to the rear bumper / hitch (or to
-     the rear face of the flatbed garage box), capable of carrying
-     2–3 bikes when interior garage is otherwise loaded.
+- **Mounting:** rear of the vehicle, on a hitch-class structural
+  carrier tied into the frame and (if needed) the subframe outriggers.
+  Reference designs: **StowAway / Lippert lift-style cargo carriers**,
+  **Hydralift motorcycle lift** (scaled), and **Aluminess motorized
+  rack** kinematics adapted to a fully enclosed box.
+- **Lift mechanism:**
+  - **Drive:** dual 24V or 48V linear actuators (Progressive Auto
+    1500-lb class) or a 12V/24V hydraulic micro-pack — choose based
+    on duty cycle and silence. Manual override crank required.
+  - **Travel:** ground-level loading position to ≥ 18" road clearance
+    in stowed/travel position; fully retracted bike box must clear
+    departure-angle envelope of the 23' total length.
+  - **Safety:** mechanical travel locks engage in stowed and loaded
+    positions (do not rely on actuators alone); end-of-travel
+    limit switches; pinch sensors; key/PIN to operate.
+  - **Interlocks:** vehicle-in-park required to deploy; rear lights
+    repeated on the box; box latched closed before lift travel.
+- **Box construction:**
+  - Aluminum frame (1.5"–2" square tube) clad in 0.090" 5052 sheet,
+    insulated lid, gas-strut top-hinged hatch (or twin barn doors
+    for full bike load-in).
+  - Interior: aluminum L-track on floor + walls; floor rubber/Line-X
+    over diamond plate; drain ports.
+  - Sealing: marine compression gasket at hatch; vehicle-side
+    weather skirt where the box meets the vehicle in stowed
+    position.
+  - Lighting: LED dome + work light. 12V/24V outlets and USB-C PD
+    for chargers (e-bike chargers powered when shore-tied; box
+    isolates load from house bus on battery to limit drain).
+- **Capacity / interior dimensions:** ≥ 75" L x 50" W x 36" H clear,
+  load capacity ≥ 250 lb (3 bikes + accessories).
+- **Maintenance access:** removable side panel for actuator/hydraulic
+  service; grease points labeled.
+- **Failure mode:** a stuck lift in the travel position must still
+  allow the vehicle to be driven safely; a stuck lift in the load
+  position must allow manual cranking to travel position with hand
+  tools only.
 - **Internal garage requirements:**
   - **Capacity:** 2–3 bikes, wheel base up to 1,250 mm, tire up to
     29x2.6 (MTB) or 700x50 (gravel), bar width up to 800 mm.
@@ -606,26 +646,48 @@ theft, and protected from weather and dust when desired.
 - **Weight budget impact:** 3 bikes ≈ 90–240 lb + rack/garage
   hardware ≈ 80–150 lb. Track in §4 weight model.
 
-## 21. Open Decisions (Track in /decisions log)
+## 21. Decisions Log
 
-1. Cab style: regular vs crew (affects shell length and pass-through).
-2. Shell length: 19' vs 21'.
-3. Bus voltage: 12V vs 24V vs 48V.
-4. AC: rooftop vs split.
-5. Heat: standalone diesel air + separate DHW vs Truma Combi.
-6. Toilet: traditional flush + black tank (current baseline) vs
-   composting vs cassette.
-7. Cab-to-house pass-through: yes/no.
-8. Subframe vendor/design: build vs buy.
-9. Solar capacity target (W) and panel count.
-10. Convertible dinette vs fixed bed (dictated by 19/21 choice).
-11. House bus voltage: 48V Epoch (current baseline) vs 12V fallback.
-12. Heating: integrated hydronic (Webasto Dual Top / Aqua-Hot) vs
-    standalone diesel air heater + separate DHW.
-13. Heated towel rack drive: hydronic vs 12V/120V electric.
-14. Rear flatbed garage box: include 30" garage aft of shell — yes/no
-    and exact depth (24"–36").
-15. Flatbed material: aluminum (preferred) vs steel.
+### Locked (this round)
+
+| # | Decision | Choice |
+|---|---|---|
+| D1 | Cab style | **Crew cab** (super cab fallback only if cabover/pass-through analysis fails) |
+| D2 | Shell length | **21' habitat** + tapered tail, **23' total exterior** |
+| D3 | Subframe | **Buy Global Trekker OEM subframe** |
+| D4 | Cab-to-house pass-through | **Yes** |
+| D5 | Bus voltage | **48V primary + 24V sub-bus** (12V only for legacy accessories) |
+| D6 | House batteries | **Epoch 48V LiFePO4**, 15–20 kWh usable |
+| D7 | Heating | **Diesel hydronic** providing both **air heat and water heat** (Webasto Dual Top / Aqua-Hot class) |
+| D8 | Heated towel rack | **Hydronic, off the diesel heater** |
+| D9 | Heated floors | **Yes — hydronic radiant** in living/galley/bath |
+| D10 | Toilet | **Flush toilet + black tank** (30–40 gal) |
+| D11 | Fresh water | **100–120 gal** |
+| D12 | Grey water | **30–40 gal** |
+| D13 | AC | **Mini-split heat pump preferred**, rooftop fallback |
+| D14 | Solar target | **1,000–1,300 W** rooftop |
+| D15 | Bed | **Fixed cabover bed**, king if fits else queen |
+| D16 | Cabinetry | **Hybrid aluminum + Baltic birch plywood** |
+| D17 | Bike carry | **Enclosed motorized lift-box** at the rear (no flatbed garage) |
+
+### Still open
+
+1. **O1 — Flatbed material:** aluminum (preferred for weight) vs steel
+   (durability, cost). Decide after subframe spec pulled from Global
+   Trekker and weight model run.
+2. **O2 — King vs queen cabover bed:** dictated by exact cabover
+   footprint of the 21' shell over the F550 crew cab roof.
+3. **O3 — Mini-split unit selection:** Mabru 48V vs Velit 24V vs
+   Webasto FCF Platinum; depends on heat-load calc and condenser
+   placement.
+4. **O4 — Hydronic unit:** Webasto Dual Top Evo 8 vs Aqua-Hot 250D
+   vs Timberline; depends on BTU need across cabin + radiant + DHW +
+   towel rack + tank freeze loop.
+5. **O5 — Lift mechanism drive:** dual linear actuators vs hydraulic
+   micro-pack for the bike box.
+6. **O6 — Roof solar layout / tilt:** flat vs tilt brackets to hit
+   1,000–1,300 W on 21' roof while preserving walking lanes.
+7. **O7 — CAD tooling and file-format strategy** (see §24).
 
 ## 22. Build Phases (Suggested)
 
@@ -656,3 +718,98 @@ theft, and protected from weather and dust when desired.
 /build-log/               photos and notes per phase
 /vendor-docs/             datasheets, install manuals
 ```
+
+## 24. CAD Tooling & File Format Strategy
+
+### 24.1 Tool comparison (free / low-cost / OSS focus)
+
+| Tool | License | Strengths | Weaknesses | Fit |
+|---|---|---|---|---|
+| **FreeCAD 1.0+** | Free, OSS (LGPL) | True parametric solid + sheet metal + assembly (Assembly4/Ondsel); integrated **Path workbench** for CAM/G-code; KiCad-friendly; runs offline; no IP lock-in | Steeper learning curve; large assemblies need discipline; CAM postprocessors per machine | **Primary OSS path.** Fully capable of this build with care. |
+| **Ondsel ES** *(now sunset, code merged into FreeCAD)* | OSS | Polished FreeCAD distribution + cloud collab | Project ended 2024 — features migrating into mainline FreeCAD | Use mainline FreeCAD; track Ondsel's contributions. |
+| **Fusion 360 Personal Use** | Free (gratis) for hobby/non-commercial | Industry-grade parametric + sheet metal + **integrated CAM** + rendering; large post-processor library; cloud collab | Not OSS; recent restrictions (10 active editable docs, limited rapid-stop/feed CAM, no nesting in free); license can change; commercial use requires paid tier | Strong if hobby-eligible and Autodesk's restrictions are tolerable. |
+| **Onshape Free** | Free (gratis) | Full parametric assemblies in browser; great collab | **Free tier makes documents PUBLIC** — major IP issue for a custom build; no integrated CAM (use Kiri:Moto add-in) | Avoid unless you accept public docs. |
+| **SolidWorks for Makers** | $48/yr, makers-only | Industry standard; great assemblies + sheet metal + CAM (HSMWorks/SW-CAM available) | Non-commercial only at this price; Windows-only; no Linux | Reasonable middle path if you stay non-commercial. |
+| **Plasticity** | Paid one-time (~$149 indie) | Fast direct/sub-D modeling; great for furniture-shape exploration | No real CAM; weaker on engineering drawings; Windows/Mac | Useful as a *concept* tool feeding STEP into FreeCAD/Fusion. |
+| **Blender** | Free, OSS (GPL) | Best-in-class **rendering and walkthroughs** (Cycles/Eevee, VR via add-ons); good mesh tools | Not parametric; not for production engineering | **Use as the visualization stage** for livability review. |
+| **OpenSCAD** | Free, OSS (GPL) | Script-driven, great for parametric brackets/jigs | Not assembly-grade for large interiors | Niche, for parametric small parts only. |
+| **LibreCAD / QCAD CE** | Free, OSS | Solid 2D drafting, DXF clean output | 2D only | Useful for shop drawings if FreeCAD's TechDraw is awkward. |
+| **KiCad** | Free, OSS | Best-in-class **electrical schematics and PCB**; rich symbol/footprint libraries | Not for vehicle wiring harness diagrams natively (works fine for schematics + we draw harness in FreeCAD/Inkscape) | **Use for §5 electrical schematics and any custom PCBs.** |
+| **Kiri:Moto** | Free, OSS (browser) | Quick **CAM** for routers/lasers/mills; reads STL/STEP; runs in browser | Less powerful than Fusion/HSMWorks for complex 3D toolpaths | Good companion CAM if main CAD lacks it. |
+| **CAMotics** | Free, OSS | G-code **simulator** (verify before machining) | Not a CAM authoring tool | Sanity-check every run. |
+| **Inkscape** | Free, OSS | SVG/DXF authoring for laser/waterjet | Not 3D | Vector cleanup for sheet-aluminum nesting. |
+| **draw.io / diagrams.net** | Free | P&ID, block diagrams, network/AV layout | Not engineering-grade | Use for system diagrams (plumbing P&ID, network, AC distribution one-line). |
+
+### 24.2 Recommended tool stack (decision: O7 — proposed)
+
+Choose **one of two coherent stacks** and commit to it:
+
+- **Stack A — fully open-source (recommended for IP control, no
+  vendor lock):**
+  - **FreeCAD 1.x** for all 3D mechanical: shell penetrations, subframe,
+    cabinetry assemblies, plumbing routing, brackets.
+  - **FreeCAD Path** + **Kiri:Moto** for CAM/G-code per machine.
+  - **CAMotics** to simulate every G-code file before cutting.
+  - **KiCad** for electrical schematics (§5).
+  - **Inkscape** for DXF/SVG cleanup of sheet parts.
+  - **Blender** for renders, walkthroughs, VR review of livability.
+  - **draw.io** for plumbing P&ID, AC one-line, network diagram.
+  - **LibreOffice Calc** (or Google Sheets) for BOM and weight model.
+
+- **Stack B — Fusion 360 Personal + OSS satellites (recommended if
+  hobby-license eligibility holds and Autodesk's terms are acceptable):**
+  - **Fusion 360 Personal Use** as the primary CAD + CAM (one tool).
+  - **KiCad** for electrical (Fusion's electrical is less mature for
+    vehicle wiring).
+  - **Blender** for cinematic renders/walkthroughs (import via STEP→GLTF).
+  - **draw.io** for system diagrams.
+  - **LibreOffice Calc** for BOM/weight.
+
+Either stack must produce the same canonical export set (§24.3).
+
+### 24.3 File format strategy
+
+- **Source of truth (per part/assembly):** native CAD file
+  (`.FCStd` for FreeCAD, `.f3d` for Fusion). Stored in Git via
+  **Git LFS** (binary, large).
+- **Neutral 3D exchange:** **STEP AP242** for every released part and
+  assembly. Committed alongside the native file. STEP AP214 acceptable
+  if AP242 unavailable in the chosen tool. Avoid IGES.
+- **Mesh exchange (visualization, 3D print, marketing renders):**
+  **glTF 2.0 (.glb)** preferred for web/Blender; **STL** only for 3D
+  printing.
+- **Drawings:** **PDF** (vector) for shop drawings; **DXF (R2018)** for
+  2D source feeding lasers/waterjet/CNC routers.
+- **CAM:** **G-code** files committed per machine, named
+  `<part>__<machine>__<post>.nc`. Setup sheet PDF alongside.
+- **Electrical:** KiCad project committed natively + **PDF schematic**
+  + **CSV BOM** + Gerbers (if any PCBs).
+- **Diagrams:** draw.io `.drawio` source + exported **PDF** + **PNG**.
+- **Spreadsheets:** **CSV** is canonical (diff-friendly); `.ods`/`.xlsx`
+  optional.
+- **Documents:** Markdown (`.md`) for everything human-readable
+  (this document, ADRs, build log).
+
+### 24.4 Versioning & repo conventions
+
+- **Git LFS** for `*.FCStd, *.f3d, *.step, *.stp, *.stl, *.glb, *.dxf,
+  *.pdf, *.png, *.jpg, *.kicad_pro, *.kicad_pcb`.
+- **Branching:** `main` is releasable; design work on
+  `design/<area>` branches; merge via PR with CAD review.
+- **Tagging:** semantic-ish tags per design freeze, e.g.
+  `cad-2026.05-design-freeze-1`.
+- **Decision records (ADRs):** one Markdown file per locked decision
+  in `/decisions/NNNN-<slug>.md` capturing context, options, and
+  rationale (mirrors §21 table at point-in-time).
+
+### 24.5 Export checklist (every part release)
+
+For each part or assembly cut release, the repo must contain:
+
+- [ ] Native CAD file (LFS)
+- [ ] STEP AP242 export
+- [ ] PDF shop drawing (dimensioned)
+- [ ] DXF (if 2D-cut part) or G-code + setup PDF (if CNC part)
+- [ ] Mass + station-X entry in `/weight/master.csv`
+- [ ] BOM line in `/bom/master.csv`
+- [ ] glTF preview for review
