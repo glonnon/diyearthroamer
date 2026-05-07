@@ -1,0 +1,18 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a6000000-0000-0000-0000-0000000001c0")
+	(paper "A3")
+	(title_block
+		(title "Lighting")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "24V LED interior + exterior; dimmable; scene presets")
+		(comment 2 "Cabin overhead, accent, reading lights, toe-kick, exterior porch / awning / scene / off-road")
+	)
+	(lib_symbols)
+	(sheet_instances (path "/" (page "7")))
+	(embedded_fonts no)
+)

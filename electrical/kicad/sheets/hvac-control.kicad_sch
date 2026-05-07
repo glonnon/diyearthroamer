@@ -1,0 +1,18 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a7000000-0000-0000-0000-00000000005c")
+	(paper "A3")
+	(title_block
+		(title "HVAC Control")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "Mabru 12000 mini-split (48V), Webasto Dual Top Evo 8 (12V control)")
+		(comment 2 "MaxxAir fans, bath fan, hydronic zone valves, thermostats")
+	)
+	(lib_symbols)
+	(sheet_instances (path "/" (page "8")))
+	(embedded_fonts no)
+)

@@ -1,0 +1,18 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "aa000000-0000-0000-0000-000000000a1c")
+	(paper "A3")
+	(title_block
+		(title "Comms / AV")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "Starlink Mini, Pepwave router, USB-C PD, TV/audio, GPS tracker")
+		(comment 2 "Cat6 backbone; antennas; NMEA 2000 to Cerbo")
+	)
+	(lib_symbols)
+	(sheet_instances (path "/" (page "11")))
+	(embedded_fonts no)
+)

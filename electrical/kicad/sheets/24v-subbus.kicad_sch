@@ -1,0 +1,18 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a2000000-0000-0000-0000-000000000024")
+	(paper "A2")
+	(title_block
+		(title "24V Sub-Bus")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "Orion XS 48-24, ANL 60A, sub-bus distribution to fuse blocks")
+		(comment 2 "Loads: lighting, pumps, fans, controls, hydronic blower, lift-box")
+	)
+	(lib_symbols)
+	(sheet_instances (path "/" (page "3")))
+	(embedded_fonts no)
+)

@@ -71,6 +71,39 @@ inboard of the wheel wells.
 Update `weight/master.csv`: replace single `Fresh water full` row with
 two rows at +1,800 mm station (port/curb).
 
+## Vendor stock sizes — pick from off-the-shelf RV tanks
+
+Custom poly tanks are an option but expensive and slow. Most of these
+suppliers stock 30–80 gal RV-grade tanks; we want a 60 gal (or near)
+that fits the envelope above.
+
+| Vendor | Model / size hint | Approx dim (in) | Notes |
+|---|---|---|---|
+| **Class A Customs** | various 60 gal water tanks | many shapes | broad stock; configure on site |
+| **RecPro** | 60 gal fresh water tank | ~36×24×18 | RV grade, FDA potable |
+| **Icon Direct** | 60 gal water | varies | OEM RV supplier |
+| **Plastic-Mart** | RV60 series ~60 gal | ~36×24×18 | poly, FDA potable |
+| **Plastic Direct** | RV-FW60 | ~36×24×18 | RV-specific lineup |
+| **Ronco Plastics** | various 60 gal | many | poly tanks; configure to fit |
+| **Plastic Tank Industries (PTI)** | RV water tanks (Canada) | various | good for cold-weather rated grades |
+| **eBay / RV salvage** | OEM removed tanks | various | last resort; verify FDA |
+
+### Selection criteria (apply to whatever stock size we lock)
+
+- FDA-grade poly (do not use tanks rated for chemicals only).
+- Total height ≤ 460 mm (18") to fit between subframe and shell floor.
+- Outlet at the **bottom** (not side) for full draw.
+- 1/2" or 3/4" NPT bulkhead fittings (not glued spuds).
+- Vent boss at the top, ≥ 1/2" diameter.
+- Fill boss with screen.
+- Manufacturer warranty ≥ 5 yr.
+
+### Procurement note
+
+Match the **two tanks to the same model/SKU** so plumbing fittings
+and dimensions are interchangeable. Order both tanks from the same
+batch so wall thickness and color are consistent.
+
 ## Captured in
 
 - **ADR-0015** — Fresh tank split.

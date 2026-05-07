@@ -1,0 +1,18 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a8000000-0000-0000-0000-0000000000b1")
+	(paper "A3")
+	(title_block
+		(title "Plumbing Control")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "Aquajet pump w/ accumulator, UV filter, 4x SeeLevel RV-C senders")
+		(comment 2 "Tank heater pads w/ thermostats; bridge to Cerbo via RV-C")
+	)
+	(lib_symbols)
+	(sheet_instances (path "/" (page "9")))
+	(embedded_fonts no)
+)

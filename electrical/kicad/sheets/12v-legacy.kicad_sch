@@ -1,0 +1,18 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a3000000-0000-0000-0000-000000000012")
+	(paper "A3")
+	(title_block
+		(title "12V Legacy Sub-Bus")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "24-12V converter (~20A) for legacy accessories only")
+		(comment 2 "Radio, cab pass-through sensors, marine accessories")
+	)
+	(lib_symbols)
+	(sheet_instances (path "/" (page "4")))
+	(embedded_fonts no)
+)

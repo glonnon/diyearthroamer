@@ -1,0 +1,22 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "a1000000-0000-0000-0000-000000000048")
+	(paper "A2")
+	(title_block
+		(title "48V Primary Bus")
+		(date "2026-05-07")
+		(rev "0.1")
+		(company "DIY Earthroamer Project")
+		(comment 1 "Battery bank, Class T main, busbar, MultiPlus, MPPT, mini-split")
+		(comment 2 "ABYC E-11; Class T 250A; 4/0 AWG battery to inverter")
+		(comment 3 "See electrical/oneline.md and electrical/wire-list.csv")
+		(comment 4 "Symbols: project lib (lib/diy-earthroamer.kicad_sym)")
+	)
+	(lib_symbols)
+	(sheet_instances
+		(path "/" (page "2"))
+	)
+	(embedded_fonts no)
+)

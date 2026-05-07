@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "diy-earthroamer")(type "KiCad")(uri "${KIPRJMOD}/lib/diy-earthroamer.kicad_sym")(options "")(descr "DIY Earthroamer custom symbols (Epoch, Victron, Mabru, Webasto, SmartPlug, Linak, SeeLevel, Class T fuse, busbar)"))
+)
